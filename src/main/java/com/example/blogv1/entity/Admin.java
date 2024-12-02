@@ -1,0 +1,100 @@
+package com.example.blogv1.entity;
+
+import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+@Entity
+@Table(name = "admins")
+public class Admin {
+    @Id
+    @GeneratedValue
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String username;
+    private String password;
+    private LocalDateTime created;
+    @Enumerated(EnumType.STRING)
+    private Roles role;
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
+
+
+    public Admin() {
+        this.created = LocalDateTime.now();
+        this.role=Roles.ROLE_ADMIN;
+    }
+    public Admin(String firstName, String lastName, String username, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.created = LocalDateTime.now();
+        this.role=Roles.ROLE_ADMIN;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+}
