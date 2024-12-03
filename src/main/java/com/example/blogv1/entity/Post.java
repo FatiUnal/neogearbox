@@ -1,5 +1,6 @@
 package com.example.blogv1.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -19,17 +20,26 @@ public class Post {
     private List<String> images;
     @ManyToOne
     @JoinColumn(name = "admin_id", nullable = false)
+    @JsonIgnore
     private Admin admin;
     private LocalDateTime createdAt;
     @Enumerated(EnumType.STRING)
     private PostStatus status;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "post_details_id", referencedColumnName = "id", nullable = false)
+    private PostDetails postDetails; // Polimorfik detaylar
 
-    public Post() {}
-    public Post(String title, String content, Admin admin) {
+
+    public Post() {
+        this.status = PostStatus.INACTIVE;
+        this.createdAt = LocalDateTime.now();
+    }
+    public Post(String title, String content, Admin admin, PostDetails postDetails) {
         this.title = title;
         this.content = content;
         this.admin = admin;
+        this.postDetails = postDetails;
         this.status = PostStatus.INACTIVE;
         this.createdAt = LocalDateTime.now();
     }
@@ -88,5 +98,13 @@ public class Post {
 
     public void setCoverImage(String coverImage) {
         this.coverImage = coverImage;
+    }
+
+    public PostDetails getPostDetails() {
+        return postDetails;
+    }
+
+    public void setPostDetails(PostDetails postDetails) {
+        this.postDetails = postDetails;
     }
 }

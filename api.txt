@@ -1,0 +1,39 @@
+
+http://localhost:8080/api/v1/post
+{
+  "title": "Çanakkale Ev Satışı",
+  "content": "2Satılık 3+1 daire, merkezi konumda.",
+  "type": "house",
+  "brutMetrekare": 120,
+  "netMetrekare": 100,
+  "odaSayisi": "3+1",
+  "binaYasi": "15",
+  "bulunduguKat": 3,
+  "katSayisi": 5,
+  "isitma": "Doğalgaz",
+  "banyoSayisi": 2,
+  "mutfakTipi": "Açık",
+  "balkon": true,
+  "asansor": true,
+  "otopark": true,
+  "esyali": false,
+  "kullanimDurumu": "Satılık",
+  "siteIcerisinde": false,
+  "siteAdi": "Yok",
+  "aidat": "200 TL",
+  "krediyeUygun": true,
+  "tapuDurumu": "Tapu kaydı mevcut",
+  "takas": false
+}
+
+{
+  "title": "Land for Sale",
+  "content": "This is a large land plot located in the countryside.",
+  "address": "123 Countryside Road, Village A",
+  "type": "land",
+  "brutMetrekare": 1500,
+  "netMetrekare": 1200,
+  "imarDurumu": "Residential",
+  "adaParsel": "Parcel 123",
+  "tapuDurumu": "Clear"
+}

@@ -1,7 +1,6 @@
 package com.example.blogv1.entity;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,15 +18,12 @@ public class Admin {
     private String username;
     private String password;
     private LocalDateTime created;
-    @Enumerated(EnumType.STRING)
-    private Roles role;
     @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
 
     public Admin() {
         this.created = LocalDateTime.now();
-        this.role=Roles.ROLE_ADMIN;
     }
     public Admin(String firstName, String lastName, String username, String password) {
         this.firstName = firstName;
@@ -35,7 +31,6 @@ public class Admin {
         this.username = username;
         this.password = password;
         this.created = LocalDateTime.now();
-        this.role=Roles.ROLE_ADMIN;
     }
 
     public int getId() {
@@ -80,14 +75,6 @@ public class Admin {
 
     public LocalDateTime getCreated() {
         return created;
-    }
-
-    public Roles getRole() {
-        return role;
-    }
-
-    public void setRole(Roles role) {
-        this.role = role;
     }
 
     public List<Post> getPosts() {
