@@ -8,7 +8,6 @@ import com.example.blogv1.exception.ConflictException;
 import com.example.blogv1.exception.NotFoundException;
 import com.example.blogv1.repository.OrderPostRepository;
 import com.example.blogv1.repository.PostRepository;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -55,6 +54,7 @@ public class PostService {
 
     // LandDetails nesnesini oluşturuyoruz
     private LandListing createLand(LandRequestDto landRequestDto) {
+        System.out.println("getAdreess: "+landRequestDto.getAddress());
         return new LandListing(
                 landRequestDto.getBrutMetrekare(),
                 landRequestDto.getNetMetrekare(),
@@ -67,6 +67,7 @@ public class PostService {
 
     // HouseDetails nesnesini oluşturuyoruz
     private HouseListing createHouse(HouseRequestDto houseRequestDto) {
+        System.out.println("getAdreess: "+houseRequestDto.getAddress());
         return new HouseListing(
                 houseRequestDto.getAddress(),
                 houseRequestDto.getBrutMetrekare(),
@@ -98,11 +99,11 @@ public class PostService {
         post.setTitle(postRequestDto.getTitle());
         post.setContent(postRequestDto.getContent());
 
-        if (status.equals("active")){
+        if (status.equals("ACTIVE")){
             post.setStatus(PostStatus.ACTIVE);
-        } else if (status.equals("inactive")) {
+        } else if (status.equals("INACTIVE")) {
             post.setStatus(PostStatus.INACTIVE);
-        } else if (status.equals("past")) {
+        } else if (status.equals("PAST")) {
             post.setStatus(PostStatus.PAST);
         }else
             throw new BadRequestException("Geçersiz data");
@@ -114,12 +115,12 @@ public class PostService {
             landListing.setImarDurumu(((LandRequestDto) postRequestDto).getImarDurumu());
             landListing.setNetMetrekare(((LandRequestDto) postRequestDto).getNetMetrekare());
             landListing.setTapuDurumu(((LandRequestDto) postRequestDto).getTapuDurumu());
-            landListing.setAdres(post.getPostDetails().getAdres());
+            landListing.setAddress(post.getPostDetails().getAddress());
         }else if (postRequestDto instanceof HouseRequestDto) {
             HouseListing houseListing = (HouseListing) postDetails;
             houseListing.setBrutMetrekare(((HouseRequestDto) postRequestDto).getBrutMetrekare());
             houseListing.setNetMetrekare(((HouseRequestDto) postRequestDto).getNetMetrekare());
-            houseListing.setAdres( postRequestDto.getAddress());
+            houseListing.setAddress( postRequestDto.getAddress());
             houseListing.setOdaSayisi(((HouseRequestDto) postRequestDto).getOdaSayisi());
             houseListing.setBinaYasi(((HouseRequestDto) postRequestDto).getBinaYasi());
             houseListing.setBulunduguKat(((HouseRequestDto) postRequestDto).getBulunduguKat());
@@ -154,7 +155,6 @@ public class PostService {
         } else if (status.equals("inactive")) {
             post.setStatus(PostStatus.INACTIVE);
         } else if (status.equals("past")) {
-            System.out.println("past");
             post.setStatus(PostStatus.PAST);
         }else
             throw new BadRequestException("Geçersiz data");
@@ -192,4 +192,21 @@ public class PostService {
         return postRepository.findAll(pageable).stream().map(postBuilder::postToPostSmallDto).toList();
     }
 
+    public List<Post> getActivePosts(String status) {
+        if (status.equals("ACTIVE") || status.equals("INACTIVE") || status.equals("PAST")){
+            return postRepository.findAllByStatus(status);
+        }else
+            throw new BadRequestException("Geçersiz istek");
+
+    }
+
+    public List<Post> getEstatePosts(String estate) {
+        if (estate.equals("LAND")){
+            return postRepository.findAllByPostDetails_Estate(EstateType.LAND);
+        } else if (estate.equals("HOUSE")) {
+            return postRepository.findAllByPostDetails_Estate(EstateType.HOUSE);
+        } else
+            throw new BadRequestException("Geçersiz istek");
+
+    }
 }

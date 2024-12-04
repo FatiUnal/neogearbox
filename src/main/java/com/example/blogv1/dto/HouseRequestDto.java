@@ -26,7 +26,7 @@ public class HouseRequestDto extends PostRequestDto{
     private boolean takas;
 
     public HouseRequestDto(String title, String content, String type,String address, int brutMetrekare, int netMetrekare, String odaSayisi, String binaYasi, int bulunduguKat, int katSayisi, String isitma, int banyoSayisi, String mutfakTipi, boolean balkon, boolean asansor, boolean otopark, boolean esyali, String kullanimDurumu, boolean siteIcerisinde, String siteAdi, String aidat, boolean krediyeUygun, String tapuDurumu, boolean takas) {
-        super(title, content,type,address);
+        super(title, content,address,type);
         this.brutMetrekare = brutMetrekare;
         this.netMetrekare = netMetrekare;
         this.odaSayisi = odaSayisi;

@@ -29,8 +29,8 @@ public class HouseListing extends PostDetails{
     private boolean takas;
 
 
-    public HouseListing(String adres, int brutMetrekare, int netMetrekare, String odaSayisi, String binaYasi, int bulunduguKat, int katSayisi, String isitma, int banyoSayisi, String mutfakTipi, boolean balkon, boolean asansor, boolean otopark, boolean esyali, String kullanimDurumu, boolean siteIcerisinde, String siteAdi, String aidat, boolean krediyeUygun, String tapuDurumu, boolean takas) {
-        super(adres, EstateType.GAYRIMENKUL);
+    public HouseListing(String address, int brutMetrekare, int netMetrekare, String odaSayisi, String binaYasi, int bulunduguKat, int katSayisi, String isitma, int banyoSayisi, String mutfakTipi, boolean balkon, boolean asansor, boolean otopark, boolean esyali, String kullanimDurumu, boolean siteIcerisinde, String siteAdi, String aidat, boolean krediyeUygun, String tapuDurumu, boolean takas) {
+        super(address, EstateType.HOUSE);
         this.brutMetrekare = brutMetrekare;
         this.netMetrekare = netMetrekare;
         this.odaSayisi = odaSayisi;

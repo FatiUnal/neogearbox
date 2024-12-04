@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "post")
 public class Post {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
     @Column(length = 5000)  // Maksimum 5000 karakter
@@ -26,7 +26,7 @@ public class Post {
     @Enumerated(EnumType.STRING)
     private PostStatus status;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)  // orphanRemoval, bağlı olmayan detayları siler
     @JoinColumn(name = "post_details_id", referencedColumnName = "id", nullable = false)
     private PostDetails postDetails; // Polimorfik detaylar
 

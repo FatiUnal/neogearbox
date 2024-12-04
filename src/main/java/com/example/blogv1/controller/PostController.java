@@ -5,6 +5,8 @@ import com.example.blogv1.dto.PostRequestDto;
 import com.example.blogv1.dto.PostSmallDto;
 import com.example.blogv1.entity.Post;
 import com.example.blogv1.service.PostService;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.ServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,7 @@ public class PostController {
         return new ResponseEntity<>(postService.findAll(),HttpStatus.OK);
     }
 
+    @Operation(summary = "Get greeting", description = "Returns a greeting message.")
     @GetMapping("/get-by-id")
     public ResponseEntity<Post> getById(@RequestParam int id){
         return new ResponseEntity<>(postService.getById(id),HttpStatus.OK);
@@ -57,10 +60,23 @@ public class PostController {
     }
 
     @GetMapping("/small")
-    public ResponseEntity<List<PostSmallDto>> getOrderPosts(
+    public ResponseEntity<List<PostSmallDto>> getSmallPosts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         return new ResponseEntity<>(postService.getPaginatedPosts(page, size),HttpStatus.OK);
     }
+
+    @GetMapping("/status")
+    public ResponseEntity<List<Post>> getActivePosts(@RequestParam String status){
+        return new ResponseEntity<>(postService.getActivePosts(status),HttpStatus.OK);
+    }
+
+    @GetMapping("/estate")
+    public ResponseEntity<List<Post>> getEstatePosts(@RequestParam String estate){
+        return new ResponseEntity<>(postService.getEstatePosts(estate),HttpStatus.OK);
+    }
+
+
+
 
 }

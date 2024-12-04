@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "land_listings")
+@Table(name = "land")
 public class LandListing extends PostDetails{
 
     private int brutMetrekare;
@@ -14,7 +14,7 @@ public class LandListing extends PostDetails{
     private String tapuDurumu;
 
     public LandListing(int brutMetrekare, int netMetrekare, String imarDurumu, String adaParsel, String tapuDurumu,String adres) {
-        super(adres,EstateType.ARAZI);
+        super(adres,EstateType.LAND);
         this.brutMetrekare = brutMetrekare;
         this.netMetrekare = netMetrekare;
         this.imarDurumu = imarDurumu;

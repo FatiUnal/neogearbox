@@ -9,14 +9,14 @@ import java.util.Random;
 @Inheritance(strategy = InheritanceType.JOINED) // Çünkü bu sınıf, diğer varlık sınıflar tarafından miras alınacak.
 public abstract class PostDetails {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String ilanNo;
-    private String adres;
+    private String address;
     private EstateType estate;
 
-    public PostDetails(String adres, EstateType estate) {
-        this.adres = adres;
+    public PostDetails(String address, EstateType estate) {
+        this.address = address;
         Random random = new Random();
         int fiveDigitNumber = 10000 + random.nextInt(90000);
         this.ilanNo = String.valueOf(fiveDigitNumber);
@@ -51,11 +51,11 @@ public abstract class PostDetails {
         this.estate = estate;
     }
 
-    public String getAdres() {
-        return adres;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdres(String adres) {
-        this.adres = adres;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
