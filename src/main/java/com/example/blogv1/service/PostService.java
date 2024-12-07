@@ -207,6 +207,13 @@ public class PostService {
             return postRepository.findAllByPostDetails_Estate(EstateType.HOUSE);
         } else
             throw new BadRequestException("Geçersiz istek");
+    }
 
+    public Post savePost(Post post) {
+        return postRepository.save(post);
+    }
+
+    public Post getByIlanNo(String ilan) {
+        return postRepository.findByPostDetails_IlanNo(ilan).orElseThrow(()-> new NotFoundException("Not found"));
     }
 }

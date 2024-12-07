@@ -12,7 +12,7 @@ public class PostBuilder {
                 post.getId(),
                 post.getTitle(),
                 post.getContent(),
-                post.getCoverImage()
+                post.getCoverImage().getFilename()
         );
     }
 

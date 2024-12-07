@@ -38,6 +38,11 @@ public class PostController {
         return new ResponseEntity<>(postService.getById(id),HttpStatus.OK);
     }
 
+    @GetMapping("/get-ilan")
+    public ResponseEntity<Post> getByIlan(@RequestParam String ilan){
+        return new ResponseEntity<>(postService.getByIlanNo(ilan),HttpStatus.OK);
+    }
+
     @PutMapping
     public ResponseEntity<Post> update(@RequestBody PostRequestDto postRequestDto,@RequestParam int id,@RequestParam String status){
         return new ResponseEntity<>(postService.update(id,postRequestDto,status),HttpStatus.OK);

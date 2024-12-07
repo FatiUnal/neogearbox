@@ -15,9 +15,14 @@ public class Post {
     private String title;
     @Column(length = 5000)  // Maksimum 5000 karakter
     private String content;
-    private String coverImage;
-    @ElementCollection
-    private List<String> images;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cover_id", referencedColumnName = "id")
+    private Image coverImage;
+
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    private List<Image> images;
+
+
     @ManyToOne
     @JoinColumn(name = "admin_id", nullable = false)
     @JsonIgnore
@@ -64,11 +69,11 @@ public class Post {
         this.content = content;
     }
 
-    public List<String> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 
-    public void setImages(List<String> images) {
+    public void setImages(List<Image> images) {
         this.images = images;
     }
 
@@ -92,11 +97,11 @@ public class Post {
         this.status = status;
     }
 
-    public String getCoverImage() {
+    public Image getCoverImage() {
         return coverImage;
     }
 
-    public void setCoverImage(String coverImage) {
+    public void setCoverImage(Image coverImage) {
         this.coverImage = coverImage;
     }
 
