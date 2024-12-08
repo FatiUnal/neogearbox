@@ -2,17 +2,21 @@ package com.example.blogv1.service;
 
 import com.example.blogv1.dto.AdminRequestDto;
 import com.example.blogv1.entity.Admin;
+import com.example.blogv1.exception.ConflictException;
 import com.example.blogv1.exception.NotFoundException;
 import com.example.blogv1.repository.AdminRepository;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AdminService {
     private final AdminRepository adminRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public AdminService(AdminRepository adminRepository) {
+    public AdminService(AdminRepository adminRepository, PasswordEncoder passwordEncoder) {
         this.adminRepository = adminRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Admin getByUsername(String username) {
@@ -36,19 +40,19 @@ public class AdminService {
 
         // Kullanıcı adı benzersiz mi?
         if (adminRepository.existsByUsername(adminRequestDto.getUsername())) {
-            throw new IllegalArgumentException("Username is already taken");
+            throw new ConflictException("Username is already taken");
         }
 
         // Şifre karmaşıklığını kontrol et
         if (!isPasswordStrong(adminRequestDto.getPassword())) {
-            throw new IllegalArgumentException("Password must be at least 8 characters long and contain a mix of letters, numbers, and special characters");
+            throw new ConflictException("Password must be at least 8 characters long and contain a mix of letters, numbers, and special characters");
         }
 
         Admin admin = new Admin(
                 adminRequestDto.getFirstName(),
                 adminRequestDto.getLastName(),
                 adminRequestDto.getUsername(),
-                adminRequestDto.getPassword()
+                passwordEncoder.encode(adminRequestDto.getPassword())
         );
         return adminRepository.save(admin);
     }

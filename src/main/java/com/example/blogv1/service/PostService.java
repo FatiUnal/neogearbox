@@ -3,6 +3,7 @@ package com.example.blogv1.service;
 import com.example.blogv1.builder.PostBuilder;
 import com.example.blogv1.dto.*;
 import com.example.blogv1.entity.*;
+import com.example.blogv1.entity.post.*;
 import com.example.blogv1.exception.BadRequestException;
 import com.example.blogv1.exception.ConflictException;
 import com.example.blogv1.exception.NotFoundException;

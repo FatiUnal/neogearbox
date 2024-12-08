@@ -1,7 +1,7 @@
 package com.example.blogv1.builder;
 
 import com.example.blogv1.dto.PostSmallDto;
-import com.example.blogv1.entity.Post;
+import com.example.blogv1.entity.post.Post;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,4 +1,4 @@
-package com.example.blogv1.entity;
+package com.example.blogv1.entity.post;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

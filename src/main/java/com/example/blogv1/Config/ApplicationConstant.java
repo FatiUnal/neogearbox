@@ -5,11 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 public class ApplicationConstant {
 
 
-    @Value("${jwt.secret}")
-    public static String jwtSecret;
-
-    @Value("${jwt.header}")
-    public static String jwtHeader;
+    public static String jwtSecret = "C2VB987vxNVXvn543xVvxmVX7BCVM432NxvbvbnVXncm";
+    public static String jwtHeader = "Authorization";
 
     public static String getJwtSecret() {
         return jwtSecret;

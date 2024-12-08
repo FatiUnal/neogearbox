@@ -1,4 +1,4 @@
-package com.example.blogv1.entity;
+package com.example.blogv1.entity.post;
 
 public enum EstateType {
     LAND("LAND"),HOUSE("HOUSE");

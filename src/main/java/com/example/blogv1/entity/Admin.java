@@ -1,10 +1,10 @@
 package com.example.blogv1.entity;
 
+import com.example.blogv1.entity.post.Post;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity

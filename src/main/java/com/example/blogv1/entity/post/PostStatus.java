@@ -1,4 +1,4 @@
-package com.example.blogv1.entity;
+package com.example.blogv1.entity.post;
 
 public enum PostStatus {
     ACTIVE("ACTIVE"), INACTIVE("INACTIVE"),PAST("PAST");

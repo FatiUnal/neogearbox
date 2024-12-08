@@ -1,7 +1,5 @@
 package com.example.blogv1.dto;
 
-import com.example.blogv1.entity.PostDetails;
-
 public class LandRequestDto extends PostRequestDto{
 
     private int brutMetrekare;

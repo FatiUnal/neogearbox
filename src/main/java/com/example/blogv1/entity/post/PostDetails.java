@@ -1,8 +1,7 @@
-package com.example.blogv1.entity;
+package com.example.blogv1.entity.post;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.util.Random;
 
 @Entity

@@ -1,17 +1,14 @@
 package com.example.blogv1.service;
 
-import com.example.blogv1.entity.Image;
-import com.example.blogv1.entity.ImageType;
-import com.example.blogv1.entity.Post;
+import com.example.blogv1.entity.post.Image;
+import com.example.blogv1.entity.post.ImageType;
+import com.example.blogv1.entity.post.Post;
 import com.example.blogv1.exception.BadRequestException;
 import com.example.blogv1.exception.NotFoundException;
 import com.example.blogv1.repository.ImageRepository;
-import jakarta.servlet.ServletResponse;
-import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,12 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ImageService {

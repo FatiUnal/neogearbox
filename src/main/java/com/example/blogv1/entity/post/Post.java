@@ -1,5 +1,6 @@
-package com.example.blogv1.entity;
+package com.example.blogv1.entity.post;
 
+import com.example.blogv1.entity.Admin;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 

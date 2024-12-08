@@ -1,7 +1,7 @@
 package com.example.blogv1.repository;
 
-import com.example.blogv1.entity.OrderPost;
-import com.example.blogv1.entity.Post;
+import com.example.blogv1.entity.post.OrderPost;
+import com.example.blogv1.entity.post.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
