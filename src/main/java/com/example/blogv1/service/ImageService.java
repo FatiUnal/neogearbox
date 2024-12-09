@@ -103,6 +103,7 @@ public class ImageService {
 
             String fileName = UUID.randomUUID().toString() + fileExtension;
             Path filePath = path.resolve(fileName);
+            System.out.println(filePath.toString());
 
             file.transferTo(filePath.toFile());
             Image image = new Image(fileName,ImageType.COVER);
