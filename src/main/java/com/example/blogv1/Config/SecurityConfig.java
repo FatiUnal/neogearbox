@@ -75,7 +75,8 @@ public class SecurityConfig {
                         .requestMatchers("/error/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
-                .sessionManagement(x->x.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionManagement(x->x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(x-> x.configurationSource(corsConfigurationSource()));
 
         return http.build();
     }
@@ -93,7 +94,7 @@ public class SecurityConfig {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration ccfg = new CorsConfiguration();
-                ccfg.setAllowedOrigins(List.of("http://localhost:3000"));
+                ccfg.setAllowedOrigins(List.of("http://localhost:5173"));
                 ccfg.setAllowedMethods(Collections.singletonList("*"));
                 ccfg.setAllowCredentials(true);
                 ccfg.setAllowedHeaders(Collections.singletonList("*"));
