@@ -54,7 +54,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/api/v1/post/get-by-id").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/v1/post/get-ilan").permitAll()
                         .requestMatchers(HttpMethod.PUT,"/api/v1/post").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.PUT,"api/v1/post/status").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/v1/post/status").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/v1/post/order").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET,"/api/v1/post/main").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/v1/post/small").permitAll()
