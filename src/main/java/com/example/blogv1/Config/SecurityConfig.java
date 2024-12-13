@@ -76,8 +76,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(x->x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .cors(x-> x.configurationSource(corsConfigurationSource()))
-                .requiresChannel(x->x.anyRequest().requiresSecure());
+                .cors(x-> x.configurationSource(corsConfigurationSource()));
         return http.build();
     }
 
