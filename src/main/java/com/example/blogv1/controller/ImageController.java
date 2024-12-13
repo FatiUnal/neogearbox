@@ -28,15 +28,6 @@ public class ImageController {
         return new ResponseEntity<>(imageService.uploadCoverImage(file,id), HttpStatus.CREATED);
     }
 
-    @GetMapping("/cover/{postId}")
-    public ResponseEntity<Resource> getCoverImage(@PathVariable int postId) {
-        return imageService.getCoverImage(postId);
-    }
-
-    @GetMapping("/{postId}")
-    public ResponseEntity<Resource> getImage(@PathVariable int postId,@RequestParam String filename ) {
-        return imageService.getImages(postId,filename);
-    }
 
     @GetMapping("/get-by-id")
     public ResponseEntity<Resource> getImageById(@RequestParam int imageId) {
