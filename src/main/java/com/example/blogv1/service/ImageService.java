@@ -37,7 +37,7 @@ public class ImageService {
 
     public List<String> uploadImage(MultipartFile[] files, int id) {
         Post post = postService.getById(id);
-
+        System.out.println("1");
         List<String> uploadFilesName = new ArrayList<>();
         try {
             Path path = Paths.get(UPLOAD_DIR+"images/"+id+"/");
@@ -67,7 +67,7 @@ public class ImageService {
                 file.transferTo(filePath.toFile());
 
                 post.getImages().add(image);
-                uploadFilesName.add(filePath.toString());
+                uploadFilesName.add(urls);
             }
             postService.savePost(post);
 
@@ -115,7 +115,7 @@ public class ImageService {
             post.setCoverImage(image);
             postService.savePost(post);
 
-            return fileName;
+            return urls;
         } catch (IOException e) {
             throw new RuntimeException("File upload failed for post ID: " + id, e);
         }

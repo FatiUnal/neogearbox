@@ -20,7 +20,7 @@ public class ImageController {
 
 
     @PostMapping
-    public ResponseEntity<List<String>> uploadImage(@RequestParam("images") MultipartFile[] files,@RequestParam int id) {
+    public ResponseEntity<List<String>> uploadImage(@RequestParam("images") MultipartFile[] files,@RequestParam("id") int id) {
         return new ResponseEntity<>(imageService.uploadImage(files,id), HttpStatus.CREATED);
     }
     @PostMapping("/cover")
