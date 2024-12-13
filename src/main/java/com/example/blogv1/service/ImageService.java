@@ -25,6 +25,8 @@ import java.util.*;
 public class ImageService {
     @Value("${upload.dir}")
     private String UPLOAD_DIR;
+    @Value("${spring.url}")
+    private String url;
     private final PostService postService;
     private final ImageRepository imageRepository;
 
@@ -58,8 +60,9 @@ public class ImageService {
                     throw new RuntimeException("File extension is missing");
                 }
                 String fileName = UUID.randomUUID().toString() + fileExtension;
+                String urls = url+"images/"+id+"/"+fileName;
 
-                Image image = new Image(fileName,post, ImageType.IMAGE);
+                Image image = new Image(urls,post, ImageType.IMAGE);
                 Path filePath = path.resolve(fileName);
                 file.transferTo(filePath.toFile());
 
@@ -102,11 +105,13 @@ public class ImageService {
             }
 
             String fileName = UUID.randomUUID().toString() + fileExtension;
+
+            String urls = url+"cover/"+id+"/"+fileName;
+
             Path filePath = path.resolve(fileName);
-            System.out.println(filePath.toString());
 
             file.transferTo(filePath.toFile());
-            Image image = new Image(fileName,ImageType.COVER);
+            Image image = new Image(urls,ImageType.COVER);
             post.setCoverImage(image);
             postService.savePost(post);
 
@@ -162,10 +167,6 @@ public class ImageService {
         String path = UPLOAD_DIR + "cover/" + post.getId() + "/"+coverImage;
         return deleteImage(path,postId);
     }
-
-
-
-
 
     public ResponseEntity<Resource> getImageById(int imageId) {
         Image image = imageRepository.findById(imageId).orElseThrow(()-> new NotFoundException("Image not found"));

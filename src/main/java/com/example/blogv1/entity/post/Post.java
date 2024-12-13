@@ -20,7 +20,7 @@ public class Post {
     @JoinColumn(name = "cover_id", referencedColumnName = "id")
     private Image coverImage;
 
-    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Image> images;
 
 
