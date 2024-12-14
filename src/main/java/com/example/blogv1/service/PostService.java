@@ -12,6 +12,7 @@ import com.example.blogv1.repository.PostRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,12 +23,14 @@ public class PostService {
     private final AdminService adminService;
     private final OrderPostRepository orderPostRepository;
     private final PostBuilder postBuilder;
+    private final RestClient.Builder builder;
 
-    public PostService(PostRepository postRepository, AdminService adminService, OrderPostRepository orderPostRepository, PostBuilder postBuilder) {
+    public PostService(PostRepository postRepository, AdminService adminService, OrderPostRepository orderPostRepository, PostBuilder postBuilder, RestClient.Builder builder) {
         this.postRepository = postRepository;
         this.adminService = adminService;
         this.orderPostRepository = orderPostRepository;
         this.postBuilder = postBuilder;
+        this.builder = builder;
     }
 
     public List<Post> findAll() {
@@ -190,7 +193,10 @@ public class PostService {
 
     public List<PostSmallDto> getPaginatedPosts(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return postRepository.findAll(pageable).stream().map(postBuilder::postToPostSmallDto).toList();
+        List<PostSmallDto> list = postRepository.findAll(pageable).stream().map(x->{
+            postBuilder.postToPostSmallDto(x);
+        }).toList();
+        return list;
     }
 
     public List<Post> getActivePosts(String status) {
