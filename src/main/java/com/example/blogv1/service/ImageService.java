@@ -60,7 +60,7 @@ public class ImageService {
                     throw new RuntimeException("File extension is missing");
                 }
                 String fileName = UUID.randomUUID().toString() + fileExtension;
-                String urls = url+"images/"+id+"/"+fileName;
+                String urls = url+"upload/images/"+id+"/"+fileName;
 
                 Image image = new Image(urls,post, ImageType.IMAGE);
                 Path filePath = path.resolve(fileName);
@@ -106,7 +106,7 @@ public class ImageService {
 
             String fileName = UUID.randomUUID().toString() + fileExtension;
 
-            String urls = url+"cover/"+id+"/"+fileName;
+            String urls = url+"/upload/cover/"+id+"/"+fileName;
 
             Path filePath = path.resolve(fileName);
 
