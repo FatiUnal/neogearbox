@@ -27,6 +27,9 @@ public class ImageService {
     private String UPLOAD_DIR;
     @Value("${spring.url}")
     private String url;
+
+    @Value("${spring.file.url}")
+    private String urlFile;
     private final PostService postService;
     private final ImageRepository imageRepository;
 
@@ -164,7 +167,7 @@ public class ImageService {
     public String deleteCoverImage(int postId) {
         Post post = postService.getById(postId);
         String coverImage = post.getCoverImage().getFilename();
-        String path = coverImage.replace(url,UPLOAD_DIR);
+        String path = coverImage.replace(urlFile,UPLOAD_DIR);
         return deleteImage(path,postId);
     }
 
