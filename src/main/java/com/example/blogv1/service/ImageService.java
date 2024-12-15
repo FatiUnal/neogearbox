@@ -171,9 +171,10 @@ public class ImageService {
 
         File file = new File(path);
         if (file.delete()) { // Dosya silinir.
+            int id = post.getCoverImage().getId();
             post.setCoverImage(null);
             postService.savePost(post);
-            imageRepository.deleteById(post.getCoverImage().getId());
+            imageRepository.deleteById(id);
             return "File deleted successfully";
         } else {
             throw new RuntimeException("Failed to delete file: " + path);
