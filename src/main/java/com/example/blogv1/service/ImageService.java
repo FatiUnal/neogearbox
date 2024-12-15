@@ -167,6 +167,7 @@ public class ImageService {
     public String deleteCoverImage(int postId) {
         Post post = postService.getById(postId);
         String coverImage = post.getCoverImage().getFilename();
+        System.out.println("cover image: "+coverImage);
         String path = coverImage.replace(urlFile,UPLOAD_DIR);
         System.out.println("path: "+path);
         return deleteImage(path,postId);
