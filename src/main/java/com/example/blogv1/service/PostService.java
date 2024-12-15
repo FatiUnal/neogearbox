@@ -193,10 +193,7 @@ public class PostService {
 
     public List<PostSmallDto> getPaginatedPosts(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        List<PostSmallDto> list = postRepository.findAll(pageable).stream().map(x->{
-            postBuilder.postToPostSmallDto(x);
-        }).toList();
-        return list;
+        return postRepository.findAll(pageable).stream().map(postBuilder::postToPostSmallDto).toList();
     }
 
     public List<Post> getActivePosts(String status) {
