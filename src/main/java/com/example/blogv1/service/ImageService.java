@@ -167,10 +167,14 @@ public class ImageService {
     public String deleteCoverImage(int postId) {
         Post post = postService.getById(postId);
         String coverImage = post.getCoverImage().getFilename();
-        System.out.println("cover image: "+coverImage);
         String path = coverImage.replace(urlFile,UPLOAD_DIR);
-        System.out.println("path: "+path);
-        return deleteImage(path,postId);
+        String s = deleteImage(path, postId);
+        if (s.equals("File deleted successfully")){
+            post.setCoverImage(null);
+            postService.savePost(post);
+            return "File deleted successfully";
+        }else
+            throw new BadRequestException("File could not be deleted");
     }
 
     public ResponseEntity<Resource> getImageById(int imageId) {
@@ -208,8 +212,12 @@ public class ImageService {
             for (Image image : images) {
                 if (image.getType().equals(ImageType.IMAGE)) {
                     String s = deleteImage(UPLOAD_DIR + "images/" + image.getPost().getId() + "/" + image.getFilename(), image.getId());
-                    if (!s.equals("File deleted successfully"))
+                    if (!s.equals("File deleted successfully")){
+                        image.getPost().getImages().remove(image);
+                        postService.savePost(image.getPost());
                         notDeletedImages.add(s);
+                    }
+
                 }else
                     throw new BadRequestException("Image type not supported");
 
