@@ -168,13 +168,19 @@ public class ImageService {
         Post post = postService.getById(postId);
         String coverImage = post.getCoverImage().getFilename();
         String path = coverImage.replace(urlFile,UPLOAD_DIR);
-        String s = deleteImage(path, postId);
-        if (s.equals("File deleted successfully")){
+
+        File file = new File(path);
+        if (file.delete()) { // Dosya silinir.
             post.setCoverImage(null);
             postService.savePost(post);
+            imageRepository.deleteById(post.getCoverImage().getId());
             return "File deleted successfully";
-        }else
-            throw new BadRequestException("File could not be deleted");
+        } else {
+            throw new RuntimeException("Failed to delete file: " + path);
+        }
+
+
+
     }
 
     public ResponseEntity<Resource> getImageById(int imageId) {
