@@ -106,7 +106,7 @@ public class ImageService {
 
             String fileName = UUID.randomUUID().toString() + fileExtension;
 
-            String urls = url+"/upload/cover/"+id+"/"+fileName;
+            String urls = url+"upload/cover/"+id+"/"+fileName;
 
             Path filePath = path.resolve(fileName);
 
