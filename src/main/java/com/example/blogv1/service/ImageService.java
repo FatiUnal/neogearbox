@@ -4,6 +4,7 @@ import com.example.blogv1.entity.post.Image;
 import com.example.blogv1.entity.post.ImageType;
 import com.example.blogv1.entity.post.Post;
 import com.example.blogv1.exception.BadRequestException;
+import com.example.blogv1.exception.ConflictException;
 import com.example.blogv1.exception.NotFoundException;
 import com.example.blogv1.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -166,22 +167,21 @@ public class ImageService {
 
     public String deleteCoverImage(int postId) {
         Post post = postService.getById(postId);
-        String coverImage = post.getCoverImage().getFilename();
-        String path = coverImage.replace(urlFile,UPLOAD_DIR);
-
-        File file = new File(path);
-        if (file.delete()) { // Dosya silinir.
-            int id = post.getCoverImage().getId();
-            post.setCoverImage(null);
-            postService.savePost(post);
-            imageRepository.deleteById(id);
-            return "File deleted successfully";
-        } else {
-            throw new RuntimeException("Failed to delete file: " + path);
-        }
-
-
-
+        if (post.getCoverImage() != null) {
+            String coverImage = post.getCoverImage().getFilename();
+            String path = coverImage.replace(urlFile,UPLOAD_DIR);
+            File file = new File(path);
+            if (file.delete()) { // Dosya silinir.
+                int id = post.getCoverImage().getId();
+                post.setCoverImage(null);
+                postService.savePost(post);
+                imageRepository.deleteById(id);
+                return "File deleted successfully";
+            } else {
+                throw new RuntimeException("Failed to delete file: " + path);
+            }
+        }else
+            throw new ConflictException("Image not found");
     }
 
     public ResponseEntity<Resource> getImageById(int imageId) {
