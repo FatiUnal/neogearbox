@@ -223,7 +223,9 @@ public class ImageService {
                     File file = new File(path);
                     if (file.delete()) { // Dosya silinir.
                         image.getPost().getImages().remove(image);
+                        System.out.println(image.getPost().getTitle());
                         postService.savePost(image.getPost());
+                        System.out.println("image id: "+ image.getId());
                         imageRepository.deleteById(image.getId());
                         s= "File deleted successfully";
                     } else {
