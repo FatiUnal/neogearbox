@@ -23,15 +23,13 @@ public class PostService {
     private final AdminService adminService;
     private final OrderPostRepository orderPostRepository;
     private final PostBuilder postBuilder;
-    private final ImageService imageService;
 
 
-    public PostService(PostRepository postRepository, AdminService adminService, OrderPostRepository orderPostRepository, PostBuilder postBuilder, ImageService imageService) {
+    public PostService(PostRepository postRepository, AdminService adminService, OrderPostRepository orderPostRepository, PostBuilder postBuilder) {
         this.postRepository = postRepository;
         this.adminService = adminService;
         this.orderPostRepository = orderPostRepository;
         this.postBuilder = postBuilder;
-        this.imageService = imageService;
     }
 
     public List<Post> findAll() {
@@ -210,15 +208,12 @@ public class PostService {
         return postRepository.findByPostDetails_IlanNo(ilan).orElseThrow(()-> new NotFoundException("Not found"));
     }
 
-    public String delete(int postId) {
-        Post post = getById(postId);
-        imageService.deleteCoverImage(postId);
-        imageService.deleteImageById(post.getImages().stream().map(Image::getId).collect(Collectors.toList()));
-        postRepository.delete(post);
 
-        if (postRepository.existsById(postId))
-            throw new BadRequestException("Post Not Deleted");
-        else
-            return "Post Deleted Successfully";
+    public void delete(Post post) {
+        postRepository.delete(post);
+    }
+
+    public boolean existsById(int postId) {
+        return postRepository.existsById(postId);
     }
 }

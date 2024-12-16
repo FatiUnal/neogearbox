@@ -71,10 +71,7 @@ public class PostController {
         return new ResponseEntity<>(postService.getEstatePosts(estate),HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> delete(@RequestParam int postId){
-        return new ResponseEntity<>(postService.delete(postId),HttpStatus.OK);
-    }
+
 
 
 

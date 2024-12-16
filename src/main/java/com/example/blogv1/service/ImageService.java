@@ -23,10 +23,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageService {
-    private final PostRepository postRepository;
     @Value("${upload.dir}")
     private String UPLOAD_DIR;
     @Value("${spring.url}")
@@ -37,10 +37,10 @@ public class ImageService {
     private final PostService postService;
     private final ImageRepository imageRepository;
 
-    public ImageService(PostService postService, ImageRepository imageRepository, PostRepository postRepository) {
+    public ImageService(PostService postService, ImageRepository imageRepository) {
         this.postService = postService;
         this.imageRepository = imageRepository;
-        this.postRepository = postRepository;
+
     }
 
     public List<String> uploadImage(MultipartFile[] files, int id) {
@@ -204,6 +204,19 @@ public class ImageService {
 
     public String orderPostImage(int postId, List<PostImagerOrderRequestDto> postImagerOrderRequestDtos) {
         return "";
+    }
+
+    public String delete(int postId) {
+        Post post = postService.getById(postId);
+        deleteCoverImage(postId);
+        deleteImageById(post.getImages().stream().map(Image::getId).collect(Collectors.toList()));
+        postService.delete(post);
+
+
+        if (postService.existsById(postId))
+            throw new BadRequestException("Post Not Deleted");
+        else
+            return "Post Deleted Successfully";
     }
 }
 

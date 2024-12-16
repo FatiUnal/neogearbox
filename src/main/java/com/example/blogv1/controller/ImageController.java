@@ -51,6 +51,11 @@ public class ImageController {
         return new ResponseEntity<>(imageService.deleteImageById(imagesId),HttpStatus.OK);
     }
 
+    @DeleteMapping
+    public ResponseEntity<String> delete(@RequestParam int postId){
+        return new ResponseEntity<>(imageService.delete(postId),HttpStatus.OK);
+    }
+
 
 
 
