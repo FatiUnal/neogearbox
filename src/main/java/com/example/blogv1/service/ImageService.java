@@ -204,21 +204,21 @@ public class ImageService {
 
 
 
-    public List<String> deleteImageById(List<String> imagesId) {
+    public List<String> deleteImageById(List<Integer> imagesId) {
         try {
             List<String> notDeletedImages = new ArrayList<>();
-            List<Integer> ids = imagesId.stream()
-                    .map(Integer::parseInt)
-                    .toList();
 
             List<Image> images = new ArrayList<>();
-            for (Integer id : ids) {
+            for (Integer id : imagesId) {
                 Image imageNotFound = imageRepository.findById(id).orElseThrow(() -> new NotFoundException("Image not found"));
                 images.add(imageNotFound);
             }
             for (Image image : images) {
                 if (image.getType().equals(ImageType.IMAGE)) {
-                    String s = deleteImage(UPLOAD_DIR + "images/" + image.getPost().getId() + "/" + image.getFilename(), image.getId());
+                    String url = image.getFilename();
+                    String path = UPLOAD_DIR+url.replace("litysofttest.site/upload/","");
+
+                    String s = deleteImage(path, image.getId());
                     if (!s.equals("File deleted successfully")){
                         image.getPost().getImages().remove(image);
                         postService.savePost(image.getPost());

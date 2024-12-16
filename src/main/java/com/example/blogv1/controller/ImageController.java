@@ -40,7 +40,7 @@ public class ImageController {
     }
 
     @DeleteMapping("/delete-by-id")
-    public ResponseEntity<List<String>> deleteImageById(@RequestParam List<String> imagesId) {
+    public ResponseEntity<List<String>> deleteImageById(@RequestParam List<Integer> imagesId) {
         return new ResponseEntity<>(imageService.deleteImageById(imagesId),HttpStatus.OK);
     }
 
