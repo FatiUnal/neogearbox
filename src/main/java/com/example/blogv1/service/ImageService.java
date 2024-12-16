@@ -226,7 +226,7 @@ public class ImageService {
                         System.out.println(image.getPost().getTitle());
                         postService.savePost(image.getPost());
                         System.out.println("image id: "+ image.getId());
-                        imageRepository.deleteById(image.getId());
+                        imageRepository.delete(image);
                         s= "File deleted successfully";
                     } else {
                         throw new RuntimeException("Failed to delete file: " + path);
