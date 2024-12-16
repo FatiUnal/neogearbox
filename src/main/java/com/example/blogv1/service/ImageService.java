@@ -208,8 +208,13 @@ public class ImageService {
 
     public String delete(int postId) {
         Post post = postService.getById(postId);
-        deleteCoverImage(postId);
-        deleteImageById(post.getImages().stream().map(Image::getId).collect(Collectors.toList()));
+
+        if (post.getCoverImage() != null) {
+            deleteCoverImage(postId);
+        }
+        if (post.getImages() != null) {
+            deleteImageById(post.getImages().stream().map(Image::getId).collect(Collectors.toList()));
+        }
         postService.delete(post);
 
 
