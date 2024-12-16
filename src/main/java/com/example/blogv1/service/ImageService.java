@@ -186,12 +186,13 @@ public class ImageService {
 
                     File file = new File(path);
                     if (file.delete()) {
-                        imageRepository.delete(image);
+                        imageRepository.deleteById(image.getId());
+                        /**
                         List<Image> getImages = image.getPost().getImages();
                         getImages.remove(image);
                         image.getPost().setImages(getImages);
                         postRepository.save(image.getPost());
-
+**/
                         s= "File deleted successfully";
                     } else {
                         throw new RuntimeException("Failed to delete file: " + path);
@@ -213,17 +214,10 @@ public class ImageService {
 
         }catch (NumberFormatException e) {
             throw new BadRequestException("Geçersiz data");
+        }catch (RuntimeException e) {
+            throw new ConflictException("Failed to delete images");
         }
     }
 
-    public String deleteImage(String filePath,int id) {
-        File file = new File(filePath);
-        if (file.delete()) { // Dosya silinir.
-            imageRepository.deleteById(id);
-            return "File deleted successfully";
-        } else {
-            throw new RuntimeException("Failed to delete file: " + filePath);
-        }
-    }
 }
 
