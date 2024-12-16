@@ -218,7 +218,19 @@ public class ImageService {
                     String url = image.getFilename();
                     String path = UPLOAD_DIR+url.replace("litysofttest.site/upload/","");
 
-                    String s = deleteImage(path, image.getId());
+                    String s ="";
+
+                    File file = new File(path);
+                    if (file.delete()) { // Dosya silinir.
+                        image.getPost().getImages().remove(image);
+                        postService.savePost(image.getPost());
+                        imageRepository.deleteById(image.getId());
+                        s= "File deleted successfully";
+                    } else {
+                        throw new RuntimeException("Failed to delete file: " + path);
+                    }
+
+
                     if (!s.equals("File deleted successfully")){
                         image.getPost().getImages().remove(image);
                         postService.savePost(image.getPost());
