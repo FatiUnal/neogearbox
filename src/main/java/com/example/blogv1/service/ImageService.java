@@ -7,6 +7,7 @@ import com.example.blogv1.exception.BadRequestException;
 import com.example.blogv1.exception.ConflictException;
 import com.example.blogv1.exception.NotFoundException;
 import com.example.blogv1.repository.ImageRepository;
+import com.example.blogv1.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -24,6 +25,7 @@ import java.util.*;
 
 @Service
 public class ImageService {
+    private final PostRepository postRepository;
     @Value("${upload.dir}")
     private String UPLOAD_DIR;
     @Value("${spring.url}")
@@ -34,9 +36,10 @@ public class ImageService {
     private final PostService postService;
     private final ImageRepository imageRepository;
 
-    public ImageService(PostService postService, ImageRepository imageRepository) {
+    public ImageService(PostService postService, ImageRepository imageRepository, PostRepository postRepository) {
         this.postService = postService;
         this.imageRepository = imageRepository;
+        this.postRepository = postRepository;
     }
 
     public List<String> uploadImage(MultipartFile[] files, int id) {
@@ -126,45 +129,6 @@ public class ImageService {
 
     }
 
-    public ResponseEntity<Resource> getCoverImage(int postId) {
-        Post post = postService.getById(postId);
-        try {
-            Path path = Paths.get(UPLOAD_DIR+"cover/"+postId+"/"+post.getCoverImage().getFilename());
-            Resource resource = new UrlResource(path.toUri());
-            String contentType = Files.probeContentType(path);
-            if (!resource.exists()) {
-                throw new NotFoundException("Image not found");
-            }
-
-            return ResponseEntity.ok()
-                    .contentType(MediaType.parseMediaType(contentType))
-                    .body(resource);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public ResponseEntity<Resource> getImages(int postId,String fileName) {
-        try {
-            Path path = Paths.get(UPLOAD_DIR+"images/"+postId+"/"+fileName);
-            Resource resource = new UrlResource(path.toUri());
-            String contentType = Files.probeContentType(path);
-            if (!resource.exists()) {
-                throw new NotFoundException("Image not found");
-            }
-
-            return ResponseEntity.ok()
-                    .contentType(MediaType.parseMediaType(contentType))
-                    .body(resource);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-
     public String deleteCoverImage(int postId) {
         Post post = postService.getById(postId);
         if (post.getCoverImage() != null) {
@@ -221,23 +185,22 @@ public class ImageService {
                     String s ="";
 
                     File file = new File(path);
-                    if (file.delete()) { // Dosya silinir.
-                        image.getPost().getImages().remove(image);
-                        System.out.println(image.getPost().getTitle());
-                        postService.savePost(image.getPost());
-                        System.out.println("image id: "+ image.getId());
+                    if (file.delete()) {
                         imageRepository.delete(image);
+                        List<Image> getImages = image.getPost().getImages();
+                        getImages.remove(image);
+                        image.getPost().setImages(getImages);
+                        postRepository.save(image.getPost());
+
                         s= "File deleted successfully";
                     } else {
                         throw new RuntimeException("Failed to delete file: " + path);
                     }
 
 
-                    if (!s.equals("File deleted successfully")){
-                        image.getPost().getImages().remove(image);
-                        postService.savePost(image.getPost());
-                        notDeletedImages.add(s);
-                    }
+                    image.getPost().getImages().remove(image);
+                    postService.savePost(image.getPost());
+                    notDeletedImages.add(s);
 
                 }else
                     throw new BadRequestException("Image type not supported");
