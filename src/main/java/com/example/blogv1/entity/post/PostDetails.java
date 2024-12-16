@@ -11,11 +11,11 @@ public abstract class PostDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String ilanNo;
-    private String address;
     private EstateType estate;
+    private String fiyat;
 
-    public PostDetails(String address, EstateType estate) {
-        this.address = address;
+    public PostDetails(EstateType estate, String fiyat) {
+        this.fiyat = fiyat;
         Random random = new Random();
         int fiveDigitNumber = 10000 + random.nextInt(90000);
         this.ilanNo = String.valueOf(fiveDigitNumber);
@@ -50,11 +50,11 @@ public abstract class PostDetails {
         this.estate = estate;
     }
 
-    public String getAddress() {
-        return address;
+    public String getFiyat() {
+        return fiyat;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setFiyat(String fiyat) {
+        this.fiyat = fiyat;
     }
 }

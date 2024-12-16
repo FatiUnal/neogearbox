@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
-    List<Post> findAllByStatus(String status);
     List<Post> findAllByPostDetails_Estate(EstateType estate);
     Optional<Post> findByPostDetails_IlanNo(String postDetailsİlanNo);
 }

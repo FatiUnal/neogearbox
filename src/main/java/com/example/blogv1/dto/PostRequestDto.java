@@ -14,15 +14,13 @@ public class PostRequestDto {
 
     @Column(length = 5000)  // Maksimum 5000 karakter
     private String content;
-    private String address;
     private String type;
 
     public PostRequestDto() {}
 
-    public PostRequestDto(String title, String content, String address, String type) {
+    public PostRequestDto(String title, String content, String type) {
         this.title = title;
         this.content = content;
-        this.address = address;
         this.type = type;
     }
 
@@ -48,10 +46,6 @@ public class PostRequestDto {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getAddress() {
-        return address;
     }
 
 }

@@ -9,7 +9,7 @@ public class LandRequestDto extends PostRequestDto{
     private String tapuDurumu;
 
     public LandRequestDto(String title, String content, String type,String address, int brutMetrekare, int netMetrekare, String imarDurumu, String adaParsel, String tapuDurumu) {
-        super(title, content,address,type);
+        super(title, content,type);
         this.brutMetrekare = brutMetrekare;
         this.netMetrekare = netMetrekare;
         this.imarDurumu = imarDurumu;

@@ -43,14 +43,15 @@ public class PostController {
     }
 
     @PutMapping
-    public ResponseEntity<Post> update(@RequestBody PostRequestDto postRequestDto,@RequestParam int id,@RequestParam String status){
-        return new ResponseEntity<>(postService.update(id,postRequestDto,status),HttpStatus.OK);
+    public ResponseEntity<Post> update(@RequestBody PostRequestDto postRequestDto,@RequestParam int id){
+        return new ResponseEntity<>(postService.update(id,postRequestDto),HttpStatus.OK);
     }
 
+    /**
     @PutMapping("/status")
     public ResponseEntity<Post> changeStatus(@RequestParam int id, @RequestParam String status){
         return new ResponseEntity<>(postService.changeStatus(id,status),HttpStatus.OK);
-    }
+    }**/
 
 
     @PutMapping("/order")
@@ -70,11 +71,12 @@ public class PostController {
         return new ResponseEntity<>(postService.getPaginatedPosts(page, size),HttpStatus.OK);
     }
 
+    /**
     @GetMapping("/status")
     public ResponseEntity<List<Post>> getActivePosts(@RequestParam String status){
         return new ResponseEntity<>(postService.getActivePosts(status),HttpStatus.OK);
     }
-
+**/
     @GetMapping("/estate")
     public ResponseEntity<List<Post>> getEstatePosts(@RequestParam String estate){
         return new ResponseEntity<>(postService.getEstatePosts(estate),HttpStatus.OK);

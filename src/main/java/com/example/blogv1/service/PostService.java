@@ -23,14 +23,13 @@ public class PostService {
     private final AdminService adminService;
     private final OrderPostRepository orderPostRepository;
     private final PostBuilder postBuilder;
-    private final RestClient.Builder builder;
+    
 
-    public PostService(PostRepository postRepository, AdminService adminService, OrderPostRepository orderPostRepository, PostBuilder postBuilder, RestClient.Builder builder) {
+    public PostService(PostRepository postRepository, AdminService adminService, OrderPostRepository orderPostRepository, PostBuilder postBuilder) {
         this.postRepository = postRepository;
         this.adminService = adminService;
         this.orderPostRepository = orderPostRepository;
         this.postBuilder = postBuilder;
-        this.builder = builder;
     }
 
     public List<Post> findAll() {
@@ -42,67 +41,60 @@ public class PostService {
 
     public Post create(PostRequestDto postRequestDto,String username) {
         Admin admin = adminService.getByUsername(username);
-        PostDetails postDetails;
+        PostDetails postDetails = null;
         if (postRequestDto instanceof LandRequestDto) {
-            postDetails = createLand((LandRequestDto) postRequestDto);
+            
         } else if (postRequestDto instanceof HouseRequestDto) {
             postDetails = createHouse((HouseRequestDto) postRequestDto);
         }else
             throw new BadRequestException("Geçersiz veri girişi");
 
         Post post = new Post(
-                postRequestDto.getTitle(), postRequestDto.getContent(), admin, postDetails
+                postRequestDto.getTitle(),
+                postRequestDto.getContent(),
+                admin,
+                postDetails
         );
         return postRepository.save(post);
     }
 
+    /**
     // LandDetails nesnesini oluşturuyoruz
     private LandListing createLand(LandRequestDto landRequestDto) {
-        System.out.println("getAdreess: "+landRequestDto.getAddress());
         return new LandListing(
                 landRequestDto.getBrutMetrekare(),
                 landRequestDto.getNetMetrekare(),
                 landRequestDto.getImarDurumu(),
                 landRequestDto.getAdaParsel(),
-                landRequestDto.getTapuDurumu(),
-                landRequestDto.getAddress()
+                landRequestDto.getTapuDurumu()
         );
-    }
+    }**/
 
     // HouseDetails nesnesini oluşturuyoruz
     private HouseListing createHouse(HouseRequestDto houseRequestDto) {
-        System.out.println("getAdreess: "+houseRequestDto.getAddress());
         return new HouseListing(
-                houseRequestDto.getAddress(),
+                houseRequestDto.getPrice(), 
                 houseRequestDto.getBrutMetrekare(),
-                houseRequestDto.getNetMetrekare(),
-                houseRequestDto.getOdaSayisi(),
-                houseRequestDto.getSiteAdi(),
-                houseRequestDto.getBulunduguKat(),
-                houseRequestDto.getKatSayisi(),
                 houseRequestDto.getIsitma(),
-                houseRequestDto.getBanyoSayisi(),
-                houseRequestDto.getMutfakTipi(),
-                houseRequestDto.isBalkon(),
-                houseRequestDto.isAsansor(),
+                houseRequestDto.getOdaSayisi(),
+                houseRequestDto.isMutfakTipi(),
                 houseRequestDto.isOtopark(),
-                houseRequestDto.isEsyali(),
-                houseRequestDto.getKullanimDurumu(),
-                houseRequestDto.isSiteIcerisinde(),
-                houseRequestDto.getSiteAdi(),
-                houseRequestDto.getAidat(),
-                houseRequestDto.isKrediyeUygun(),
-                houseRequestDto.getTapuDurumu(),
-                houseRequestDto.isTakas()
+                houseRequestDto.isHavuz(),
+                houseRequestDto.isOyunPark(),
+                houseRequestDto.isGüvenlik(),
+                houseRequestDto.isSporSalon(),
+                houseRequestDto.getContext1(),
+                houseRequestDto.getContext2(),
+                houseRequestDto.getContext3()
         );
     }
 
-    public Post update(int id, PostRequestDto postRequestDto,String status) {
+    public Post update(int id, PostRequestDto postRequestDto) {
         Post post = getById(id);
         PostDetails postDetails = post.getPostDetails();
         post.setTitle(postRequestDto.getTitle());
         post.setContent(postRequestDto.getContent());
-
+/**
         if (status.equals("ACTIVE")){
             post.setStatus(PostStatus.ACTIVE);
         } else if (status.equals("INACTIVE")) {
@@ -111,6 +103,7 @@ public class PostService {
             post.setStatus(PostStatus.PAST);
         }else
             throw new BadRequestException("Geçersiz data");
+**/
 
         if (postRequestDto instanceof LandRequestDto) {
             LandListing landListing = (LandListing) postDetails;
@@ -119,32 +112,20 @@ public class PostService {
             landListing.setImarDurumu(((LandRequestDto) postRequestDto).getImarDurumu());
             landListing.setNetMetrekare(((LandRequestDto) postRequestDto).getNetMetrekare());
             landListing.setTapuDurumu(((LandRequestDto) postRequestDto).getTapuDurumu());
-            landListing.setAddress(post.getPostDetails().getAddress());
         }else if (postRequestDto instanceof HouseRequestDto) {
             HouseListing houseListing = (HouseListing) postDetails;
             houseListing.setBrutMetrekare(((HouseRequestDto) postRequestDto).getBrutMetrekare());
-            houseListing.setNetMetrekare(((HouseRequestDto) postRequestDto).getNetMetrekare());
-            houseListing.setAddress( postRequestDto.getAddress());
-            houseListing.setOdaSayisi(((HouseRequestDto) postRequestDto).getOdaSayisi());
-            houseListing.setBinaYasi(((HouseRequestDto) postRequestDto).getBinaYasi());
-            houseListing.setBulunduguKat(((HouseRequestDto) postRequestDto).getBulunduguKat());
-            houseListing.setKatSayisi(((HouseRequestDto) postRequestDto).getKatSayisi());
             houseListing.setIsitma(((HouseRequestDto) postRequestDto).getIsitma());
-            houseListing.setBanyoSayisi(((HouseRequestDto) postRequestDto).getBanyoSayisi());
-            houseListing.setMutfakTipi(((HouseRequestDto) postRequestDto).getMutfakTipi());
-            houseListing.setBalkon(((HouseRequestDto) postRequestDto).isBalkon());
-            houseListing.setAsansor(((HouseRequestDto) postRequestDto).isAsansor());
+            houseListing.setOdaSayisi(((HouseRequestDto) postRequestDto).getOdaSayisi());
+            houseListing.setMutfakTipi(((HouseRequestDto) postRequestDto).isMutfakTipi());
             houseListing.setOtopark(((HouseRequestDto) postRequestDto).isOtopark());
-            houseListing.setEsyali(((HouseRequestDto) postRequestDto).isEsyali());
-            houseListing.setKullanimDurumu(((HouseRequestDto) postRequestDto).getKullanimDurumu());
-            houseListing.setSiteIcerisinde(((HouseRequestDto) postRequestDto).isSiteIcerisinde());
-            houseListing.setSiteAdi(((HouseRequestDto) postRequestDto).getSiteAdi());
-            houseListing.setAidat(((HouseRequestDto) postRequestDto).getAidat());
-            houseListing.setKrediyeUygun(((HouseRequestDto) postRequestDto).isKrediyeUygun());
-            houseListing.setTapuDurumu(((HouseRequestDto) postRequestDto).getTapuDurumu());
-            houseListing.setTakas(((HouseRequestDto) postRequestDto).isTakas());
-
-
+            houseListing.setHavuz(((HouseRequestDto) postRequestDto).isHavuz());
+            houseListing.setOyunPark(((HouseRequestDto) postRequestDto).isOyunPark());
+            houseListing.setGüvenlik(((HouseRequestDto) postRequestDto).isGüvenlik());
+            houseListing.setSporSalon(((HouseRequestDto) postRequestDto).isSporSalon());
+            houseListing.setContext1(((HouseRequestDto) postRequestDto).getContext1());
+            houseListing.setContext2(((HouseRequestDto) postRequestDto).getContext2());
+            houseListing.setContext3(((HouseRequestDto) postRequestDto).getContext3());
         }else
             throw new BadRequestException("Geçersiz veri girişi");
         post.setPostDetails(postDetails);
@@ -152,6 +133,7 @@ public class PostService {
         return postRepository.save(post);
     }
 
+    /**
     public Post changeStatus(int id, String status) {
         Post post = getById(id);
         if (status.equals("active")){
@@ -165,7 +147,8 @@ public class PostService {
         System.out.println(post.getStatus());
         return postRepository.save(post);
     }
-
+**/
+    
     public String orderPost(List<OrderPostRequestDto> orderPostRequestDto) {
 
         for (int i = 0; i < orderPostRequestDto.size(); i++) {
@@ -196,6 +179,7 @@ public class PostService {
         return postRepository.findAll(pageable).stream().map(postBuilder::postToPostSmallDto).toList();
     }
 
+    /**
     public List<Post> getActivePosts(String status) {
         if (status.equals("ACTIVE") || status.equals("INACTIVE") || status.equals("PAST")){
             return postRepository.findAllByStatus(status);
@@ -203,6 +187,7 @@ public class PostService {
             throw new BadRequestException("Geçersiz istek");
 
     }
+     **/
 
     public List<Post> getEstatePosts(String estate) {
         if (estate.equals("LAND")){

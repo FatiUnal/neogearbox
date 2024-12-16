@@ -1,129 +1,139 @@
 package com.example.blogv1.dto;
 
 public class HouseRequestDto extends PostRequestDto{
-
-    private int brutMetrekare;
-    private int netMetrekare;
-    private String odaSayisi;
-    private String binaYasi;
-    private int bulunduguKat;
-    private int katSayisi;
+    private String price;
+    private String brutMetrekare;
     private String isitma;
-    private int banyoSayisi;
-    private String mutfakTipi;
-    private boolean balkon;
-    private boolean asansor;
+    private String odaSayisi;
+    private boolean mutfakTipi;
     private boolean otopark;
-    private boolean esyali;
-    private String kullanimDurumu;
-    private boolean siteIcerisinde;
-    private String siteAdi;
-    private String aidat;
-    private boolean krediyeUygun;
-    private String tapuDurumu;
-    private boolean takas;
+    private boolean havuz;
+    private boolean oyunPark;
+    private boolean güvenlik;
+    private boolean sporSalon;
 
-    public HouseRequestDto(String title, String content, String type,String address, int brutMetrekare, int netMetrekare, String odaSayisi, String binaYasi, int bulunduguKat, int katSayisi, String isitma, int banyoSayisi, String mutfakTipi, boolean balkon, boolean asansor, boolean otopark, boolean esyali, String kullanimDurumu, boolean siteIcerisinde, String siteAdi, String aidat, boolean krediyeUygun, String tapuDurumu, boolean takas) {
-        super(title, content,address,type);
+    private String context1;
+    private String context2;
+    private String context3;
+
+    public HouseRequestDto(String title, String content, String type, String price, String brutMetrekare, String isitma, String odaSayisi, boolean mutfakTipi, boolean otopark, boolean havuz, boolean oyunPark, boolean güvenlik, boolean sporSalon, String context1, String context2, String context3) {
+        super(title, content, type);
+        this.price = price;
         this.brutMetrekare = brutMetrekare;
-        this.netMetrekare = netMetrekare;
-        this.odaSayisi = odaSayisi;
-        this.binaYasi = binaYasi;
-        this.bulunduguKat = bulunduguKat;
-        this.katSayisi = katSayisi;
         this.isitma = isitma;
-        this.banyoSayisi = banyoSayisi;
+        this.odaSayisi = odaSayisi;
         this.mutfakTipi = mutfakTipi;
-        this.balkon = balkon;
-        this.asansor = asansor;
         this.otopark = otopark;
-        this.esyali = esyali;
-        this.kullanimDurumu = kullanimDurumu;
-        this.siteIcerisinde = siteIcerisinde;
-        this.siteAdi = siteAdi;
-        this.aidat = aidat;
-        this.krediyeUygun = krediyeUygun;
-        this.tapuDurumu = tapuDurumu;
-        this.takas = takas;
+        this.havuz = havuz;
+        this.oyunPark = oyunPark;
+        this.güvenlik = güvenlik;
+        this.sporSalon = sporSalon;
+        this.context1 = context1;
+        this.context2 = context2;
+        this.context3 = context3;
     }
 
-    public int getBrutMetrekare() {
+    public String getBrutMetrekare() {
         return brutMetrekare;
     }
 
-    public int getNetMetrekare() {
-        return netMetrekare;
-    }
-
-    public String getOdaSayisi() {
-        return odaSayisi;
-    }
-
-    public String getBinaYasi() {
-        return binaYasi;
-    }
-
-    public int getBulunduguKat() {
-        return bulunduguKat;
-    }
-
-    public int getKatSayisi() {
-        return katSayisi;
+    public void setBrutMetrekare(String brutMetrekare) {
+        this.brutMetrekare = brutMetrekare;
     }
 
     public String getIsitma() {
         return isitma;
     }
 
-    public int getBanyoSayisi() {
-        return banyoSayisi;
+    public void setIsitma(String isitma) {
+        this.isitma = isitma;
     }
 
-    public String getMutfakTipi() {
+    public String getOdaSayisi() {
+        return odaSayisi;
+    }
+
+    public void setOdaSayisi(String odaSayisi) {
+        this.odaSayisi = odaSayisi;
+    }
+
+    public boolean isMutfakTipi() {
         return mutfakTipi;
     }
 
-    public boolean isBalkon() {
-        return balkon;
-    }
-
-    public boolean isAsansor() {
-        return asansor;
+    public void setMutfakTipi(boolean mutfakTipi) {
+        this.mutfakTipi = mutfakTipi;
     }
 
     public boolean isOtopark() {
         return otopark;
     }
 
-    public boolean isEsyali() {
-        return esyali;
+    public void setOtopark(boolean otopark) {
+        this.otopark = otopark;
     }
 
-    public String getKullanimDurumu() {
-        return kullanimDurumu;
+    public boolean isHavuz() {
+        return havuz;
     }
 
-    public boolean isSiteIcerisinde() {
-        return siteIcerisinde;
+    public void setHavuz(boolean havuz) {
+        this.havuz = havuz;
     }
 
-    public String getSiteAdi() {
-        return siteAdi;
+    public boolean isOyunPark() {
+        return oyunPark;
     }
 
-    public String getAidat() {
-        return aidat;
+    public void setOyunPark(boolean oyunPark) {
+        this.oyunPark = oyunPark;
     }
 
-    public boolean isKrediyeUygun() {
-        return krediyeUygun;
+    public boolean isGüvenlik() {
+        return güvenlik;
     }
 
-    public String getTapuDurumu() {
-        return tapuDurumu;
+    public void setGüvenlik(boolean güvenlik) {
+        this.güvenlik = güvenlik;
     }
 
-    public boolean isTakas() {
-        return takas;
+    public boolean isSporSalon() {
+        return sporSalon;
+    }
+
+    public void setSporSalon(boolean sporSalon) {
+        this.sporSalon = sporSalon;
+    }
+
+    public String getContext1() {
+        return context1;
+    }
+
+    public void setContext1(String context1) {
+        this.context1 = context1;
+    }
+
+    public String getContext2() {
+        return context2;
+    }
+
+    public void setContext2(String context2) {
+        this.context2 = context2;
+    }
+
+    public String getContext3() {
+        return context3;
+    }
+
+    public void setContext3(String context3) {
+        this.context3 = context3;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 }

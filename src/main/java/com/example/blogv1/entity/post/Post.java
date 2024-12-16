@@ -23,14 +23,11 @@ public class Post {
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Image> images;
 
-
     @ManyToOne
     @JoinColumn(name = "admin_id", nullable = false)
     @JsonIgnore
     private Admin admin;
     private LocalDateTime createdAt;
-    @Enumerated(EnumType.STRING)
-    private PostStatus status;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)  // orphanRemoval, bağlı olmayan detayları siler
     @JoinColumn(name = "post_details_id", referencedColumnName = "id", nullable = false)
@@ -38,7 +35,6 @@ public class Post {
 
 
     public Post() {
-        this.status = PostStatus.INACTIVE;
         this.createdAt = LocalDateTime.now();
     }
     public Post(String title, String content, Admin admin, PostDetails postDetails) {
@@ -46,7 +42,6 @@ public class Post {
         this.content = content;
         this.admin = admin;
         this.postDetails = postDetails;
-        this.status = PostStatus.INACTIVE;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -88,14 +83,6 @@ public class Post {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public PostStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(PostStatus status) {
-        this.status = status;
     }
 
     public Image getCoverImage() {

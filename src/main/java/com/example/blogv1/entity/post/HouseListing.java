@@ -1,5 +1,6 @@
 package com.example.blogv1.entity.post;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -7,110 +8,49 @@ import jakarta.persistence.Table;
 @Table(name = "house")
 public class HouseListing extends PostDetails{
 
-    private int brutMetrekare;
-    private int netMetrekare;
-    private String odaSayisi;
-    private String binaYasi;
-    private int bulunduguKat;
-    private int katSayisi;
+    private String brutMetrekare;
     private String isitma;
-    private int banyoSayisi;
-    private String mutfakTipi;
-    private boolean balkon;
-    private boolean asansor;
+    private String odaSayisi;
+    private boolean mutfakTipi;
     private boolean otopark;
-    private boolean esyali;
-    private String kullanimDurumu;
-    private boolean siteIcerisinde;
-    private String siteAdi;
-    private String aidat;
-    private boolean krediyeUygun;
-    private String tapuDurumu;
-    private boolean takas;
+    private boolean havuz;
+    private boolean oyunPark;
+    private boolean güvenlik;
+    private boolean sporSalon;
 
+    @Column(length = 5000)  // Maksimum 5000 karakter
+    private String context1;
+    @Column(length = 5000)  // Maksimum 5000 karakter
+    private String context2;
+    @Column(length = 5000)  // Maksimum 5000 karakter
+    private String context3;
 
-    public HouseListing(String address, int brutMetrekare, int netMetrekare, String odaSayisi, String binaYasi, int bulunduguKat, int katSayisi, String isitma, int banyoSayisi, String mutfakTipi, boolean balkon, boolean asansor, boolean otopark, boolean esyali, String kullanimDurumu, boolean siteIcerisinde, String siteAdi, String aidat, boolean krediyeUygun, String tapuDurumu, boolean takas) {
-        super(address, EstateType.HOUSE);
+    public HouseListing(String price,String brutMetrekare, String isitma, String odaSayisi, boolean mutfakTipi, boolean otopark, boolean havuz, boolean oyunPark, boolean güvenlik, boolean sporSalon, String context1, String context2, String context3) {
+        super(EstateType.HOUSE,price);
         this.brutMetrekare = brutMetrekare;
-        this.netMetrekare = netMetrekare;
-        this.odaSayisi = odaSayisi;
-        this.binaYasi = binaYasi;
-        this.bulunduguKat = bulunduguKat;
-        this.katSayisi = katSayisi;
         this.isitma = isitma;
-        this.banyoSayisi = banyoSayisi;
+        this.odaSayisi = odaSayisi;
         this.mutfakTipi = mutfakTipi;
-        this.balkon = balkon;
-        this.asansor = asansor;
         this.otopark = otopark;
-        this.esyali = esyali;
-        this.kullanimDurumu = kullanimDurumu;
-        this.siteIcerisinde = siteIcerisinde;
-        this.siteAdi = siteAdi;
-        this.aidat = aidat;
-        this.krediyeUygun = krediyeUygun;
-        this.tapuDurumu = tapuDurumu;
-        this.takas = takas;
+        this.havuz = havuz;
+        this.oyunPark = oyunPark;
+        this.güvenlik = güvenlik;
+        this.sporSalon = sporSalon;
+        this.context1 = context1;
+        this.context2 = context2;
+        this.context3 = context3;
     }
 
     public HouseListing() {
         super();
     }
 
-    public int getBrutMetrekare() {
+    public String getBrutMetrekare() {
         return brutMetrekare;
     }
 
-    public void setBrutMetrekare(int brutMetrekare) {
+    public void setBrutMetrekare(String brutMetrekare) {
         this.brutMetrekare = brutMetrekare;
-    }
-
-    public String getAidat() {
-        return aidat;
-    }
-
-    public void setAidat(String aidat) {
-        this.aidat = aidat;
-    }
-
-    public int getNetMetrekare() {
-        return netMetrekare;
-    }
-
-    public void setNetMetrekare(int netMetrekare) {
-        this.netMetrekare = netMetrekare;
-    }
-
-    public String getOdaSayisi() {
-        return odaSayisi;
-    }
-
-    public void setOdaSayisi(String odaSayisi) {
-        this.odaSayisi = odaSayisi;
-    }
-
-    public String getBinaYasi() {
-        return binaYasi;
-    }
-
-    public void setBinaYasi(String binaYasi) {
-        this.binaYasi = binaYasi;
-    }
-
-    public int getBulunduguKat() {
-        return bulunduguKat;
-    }
-
-    public void setBulunduguKat(int bulunduguKat) {
-        this.bulunduguKat = bulunduguKat;
-    }
-
-    public int getKatSayisi() {
-        return katSayisi;
-    }
-
-    public void setKatSayisi(int katSayisi) {
-        this.katSayisi = katSayisi;
     }
 
     public String getIsitma() {
@@ -121,36 +61,20 @@ public class HouseListing extends PostDetails{
         this.isitma = isitma;
     }
 
-    public int getBanyoSayisi() {
-        return banyoSayisi;
+    public String getOdaSayisi() {
+        return odaSayisi;
     }
 
-    public void setBanyoSayisi(int banyoSayisi) {
-        this.banyoSayisi = banyoSayisi;
+    public void setOdaSayisi(String odaSayisi) {
+        this.odaSayisi = odaSayisi;
     }
 
-    public String getMutfakTipi() {
+    public boolean isMutfakTipi() {
         return mutfakTipi;
     }
 
-    public void setMutfakTipi(String mutfakTipi) {
+    public void setMutfakTipi(boolean mutfakTipi) {
         this.mutfakTipi = mutfakTipi;
-    }
-
-    public boolean isBalkon() {
-        return balkon;
-    }
-
-    public void setBalkon(boolean balkon) {
-        this.balkon = balkon;
-    }
-
-    public boolean isAsansor() {
-        return asansor;
-    }
-
-    public void setAsansor(boolean asansor) {
-        this.asansor = asansor;
     }
 
     public boolean isOtopark() {
@@ -161,59 +85,59 @@ public class HouseListing extends PostDetails{
         this.otopark = otopark;
     }
 
-    public boolean isEsyali() {
-        return esyali;
+    public boolean isHavuz() {
+        return havuz;
     }
 
-    public void setEsyali(boolean esyali) {
-        this.esyali = esyali;
+    public void setHavuz(boolean havuz) {
+        this.havuz = havuz;
     }
 
-    public String getKullanimDurumu() {
-        return kullanimDurumu;
+    public boolean isOyunPark() {
+        return oyunPark;
     }
 
-    public void setKullanimDurumu(String kullanimDurumu) {
-        this.kullanimDurumu = kullanimDurumu;
+    public void setOyunPark(boolean oyunPark) {
+        this.oyunPark = oyunPark;
     }
 
-    public boolean isSiteIcerisinde() {
-        return siteIcerisinde;
+    public boolean isGüvenlik() {
+        return güvenlik;
     }
 
-    public void setSiteIcerisinde(boolean siteIcerisinde) {
-        this.siteIcerisinde = siteIcerisinde;
+    public void setGüvenlik(boolean güvenlik) {
+        this.güvenlik = güvenlik;
     }
 
-    public String getSiteAdi() {
-        return siteAdi;
+    public boolean isSporSalon() {
+        return sporSalon;
     }
 
-    public void setSiteAdi(String siteAdi) {
-        this.siteAdi = siteAdi;
+    public void setSporSalon(boolean sporSalon) {
+        this.sporSalon = sporSalon;
     }
 
-    public boolean isKrediyeUygun() {
-        return krediyeUygun;
+    public String getContext1() {
+        return context1;
     }
 
-    public void setKrediyeUygun(boolean krediyeUygun) {
-        this.krediyeUygun = krediyeUygun;
+    public void setContext1(String context1) {
+        this.context1 = context1;
     }
 
-    public String getTapuDurumu() {
-        return tapuDurumu;
+    public String getContext2() {
+        return context2;
     }
 
-    public void setTapuDurumu(String tapuDurumu) {
-        this.tapuDurumu = tapuDurumu;
+    public void setContext2(String context2) {
+        this.context2 = context2;
     }
 
-    public boolean isTakas() {
-        return takas;
+    public String getContext3() {
+        return context3;
     }
 
-    public void setTakas(boolean takas) {
-        this.takas = takas;
+    public void setContext3(String context3) {
+        this.context3 = context3;
     }
 }
