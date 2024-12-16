@@ -73,7 +73,9 @@ public class PostService {
     // HouseDetails nesnesini oluşturuyoruz
     private HouseListing createHouse(HouseRequestDto houseRequestDto) {
         return new HouseListing(
-                houseRequestDto.getPrice(), 
+                houseRequestDto.getPrice(),
+                houseRequestDto.getSehir(),
+                houseRequestDto.getIlce(),
                 houseRequestDto.getBrutMetrekare(),
                 houseRequestDto.getIsitma(),
                 houseRequestDto.getOdaSayisi(),

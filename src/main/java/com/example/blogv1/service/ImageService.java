@@ -1,5 +1,6 @@
 package com.example.blogv1.service;
 
+import com.example.blogv1.dto.PostImagerOrderRequestDto;
 import com.example.blogv1.entity.post.Image;
 import com.example.blogv1.entity.post.ImageType;
 import com.example.blogv1.entity.post.Post;
@@ -44,7 +45,7 @@ public class ImageService {
 
     public List<String> uploadImage(MultipartFile[] files, int id) {
         Post post = postService.getById(id);
-        System.out.println("1");
+
         List<String> uploadFilesName = new ArrayList<>();
         try {
             Path path = Paths.get(UPLOAD_DIR+"images/"+id+"/");
@@ -59,18 +60,10 @@ public class ImageService {
                     throw new RuntimeException("File name is invalid");
                 }
 
-                String fileExtension = "";
-                int lastDotIndex = originalFileName.lastIndexOf(".");
-                if (lastDotIndex > 0) {
-                    fileExtension = originalFileName.substring(lastDotIndex); // Örneğin: .png
-                } else {
-                    throw new RuntimeException("File extension is missing");
-                }
-                String fileName = UUID.randomUUID().toString() + fileExtension;
-                String urls = url+"upload/images/"+id+"/"+fileName;
+                String urls = url+"upload/images/"+id+"/"+originalFileName;
 
                 Image image = new Image(urls,post, ImageType.IMAGE);
-                Path filePath = path.resolve(fileName);
+                Path filePath = path.resolve(originalFileName);
                 file.transferTo(filePath.toFile());
 
                 post.getImages().add(image);
@@ -103,19 +96,9 @@ public class ImageService {
                 throw new RuntimeException("File name is invalid");
             }
 
-            String fileExtension = "";
-            int lastDotIndex = originalFileName.lastIndexOf(".");
-            if (lastDotIndex > 0) {
-                fileExtension = originalFileName.substring(lastDotIndex); // Örneğin: .png
-            } else {
-                throw new RuntimeException("File extension is missing");
-            }
+            String urls = url+"upload/cover/"+id+"/"+originalFileName;
 
-            String fileName = UUID.randomUUID().toString() + fileExtension;
-
-            String urls = url+"upload/cover/"+id+"/"+fileName;
-
-            Path filePath = path.resolve(fileName);
+            Path filePath = path.resolve(originalFileName);
 
             file.transferTo(filePath.toFile());
             Image image = new Image(urls,ImageType.COVER);
@@ -219,5 +202,8 @@ public class ImageService {
         }
     }
 
+    public String orderPostImage(int postId, List<PostImagerOrderRequestDto> postImagerOrderRequestDtos) {
+        return "";
+    }
 }
 

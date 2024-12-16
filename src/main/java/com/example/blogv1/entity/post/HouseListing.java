@@ -25,8 +25,8 @@ public class HouseListing extends PostDetails{
     @Column(length = 5000)  // Maksimum 5000 karakter
     private String context3;
 
-    public HouseListing(String price,String brutMetrekare, String isitma, String odaSayisi, boolean mutfakTipi, boolean otopark, boolean havuz, boolean oyunPark, boolean güvenlik, boolean sporSalon, String context1, String context2, String context3) {
-        super(EstateType.HOUSE,price);
+    public HouseListing(String price,String sehir,String ilce,String brutMetrekare, String isitma, String odaSayisi, boolean mutfakTipi, boolean otopark, boolean havuz, boolean oyunPark, boolean güvenlik, boolean sporSalon, String context1, String context2, String context3) {
+        super(EstateType.HOUSE,price,sehir,ilce);
         this.brutMetrekare = brutMetrekare;
         this.isitma = isitma;
         this.odaSayisi = odaSayisi;

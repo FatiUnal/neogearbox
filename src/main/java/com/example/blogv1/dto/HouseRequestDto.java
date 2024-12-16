@@ -16,8 +16,8 @@ public class HouseRequestDto extends PostRequestDto{
     private String context2;
     private String context3;
 
-    public HouseRequestDto(String title, String content, String type, String price, String brutMetrekare, String isitma, String odaSayisi, boolean mutfakTipi, boolean otopark, boolean havuz, boolean oyunPark, boolean güvenlik, boolean sporSalon, String context1, String context2, String context3) {
-        super(title, content, type);
+    public HouseRequestDto(String sehir,String ilce,String title, String content, String type, String price, String brutMetrekare, String isitma, String odaSayisi, boolean mutfakTipi, boolean otopark, boolean havuz, boolean oyunPark, boolean güvenlik, boolean sporSalon, String context1, String context2, String context3) {
+        super(title, content, type,sehir,ilce);
         this.price = price;
         this.brutMetrekare = brutMetrekare;
         this.isitma = isitma;

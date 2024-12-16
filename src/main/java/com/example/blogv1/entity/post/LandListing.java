@@ -13,8 +13,8 @@ public class LandListing extends PostDetails{
     private String adaParsel;
     private String tapuDurumu;
 
-    public LandListing(String price,int brutMetrekare, int netMetrekare, String imarDurumu, String adaParsel, String tapuDurumu) {
-        super(EstateType.LAND,price);
+    public LandListing(String sehir,String ilce,String price,int brutMetrekare, int netMetrekare, String imarDurumu, String adaParsel, String tapuDurumu) {
+        super(EstateType.LAND,price,sehir,ilce);
         this.brutMetrekare = brutMetrekare;
         this.netMetrekare = netMetrekare;
         this.imarDurumu = imarDurumu;

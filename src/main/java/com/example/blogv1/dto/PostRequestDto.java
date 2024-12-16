@@ -15,13 +15,17 @@ public class PostRequestDto {
     @Column(length = 5000)  // Maksimum 5000 karakter
     private String content;
     private String type;
+    private String sehir;
+    private String ilce;
 
     public PostRequestDto() {}
 
-    public PostRequestDto(String title, String content, String type) {
+    public PostRequestDto(String title, String content, String type, String sehir, String ilce) {
         this.title = title;
         this.content = content;
         this.type = type;
+        this.sehir = sehir;
+        this.ilce = ilce;
     }
 
     public String getTitle() {
@@ -48,4 +52,19 @@ public class PostRequestDto {
         this.type = type;
     }
 
+    public String getSehir() {
+        return sehir;
+    }
+
+    public void setSehir(String sehir) {
+        this.sehir = sehir;
+    }
+
+    public String getIlce() {
+        return ilce;
+    }
+
+    public void setIlce(String ilce) {
+        this.ilce = ilce;
+    }
 }

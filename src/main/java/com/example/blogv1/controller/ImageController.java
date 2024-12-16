@@ -1,6 +1,8 @@
 package com.example.blogv1.controller;
 
+import com.example.blogv1.dto.PostImagerOrderRequestDto;
 import com.example.blogv1.service.ImageService;
+import jakarta.servlet.ServletResponse;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,11 @@ public class ImageController {
     @PostMapping("/cover")
     public ResponseEntity<String> uploadCover(@RequestParam("image") MultipartFile file,@RequestParam("id") int id) {
         return new ResponseEntity<>(imageService.uploadCoverImage(file,id), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/order-image")
+    public ResponseEntity<String> orderPostImage(@RequestParam int postId, List<PostImagerOrderRequestDto> postImagerOrderRequestDtos){
+        return new ResponseEntity<>(imageService.orderPostImage(postId,postImagerOrderRequestDtos),HttpStatus.OK);
     }
 
 
