@@ -185,6 +185,7 @@ public class ImageService {
                 images.add(imageNotFound);
             }
             for (Image image : images) {
+                System.out.println(image.getId());
                 if (image.getType().equals(ImageType.IMAGE)) {
                     String url = image.getFilename();
                     String path = UPLOAD_DIR+url.replace("litysofttest.site/upload/","");
@@ -194,12 +195,6 @@ public class ImageService {
                     File file = new File(path);
                     if (file.delete()) {
                         imageRepository.deleteById(image.getId());
-                        /**
-                        List<Image> getImages = image.getPost().getImages();
-                        getImages.remove(image);
-                        image.getPost().setImages(getImages);
-                        postRepository.save(image.getPost());
-**/
                         s= "File deleted successfully";
                     } else {
                         throw new RuntimeException("Failed to delete file: " + path);
