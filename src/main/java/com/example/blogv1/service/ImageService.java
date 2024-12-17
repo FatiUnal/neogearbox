@@ -100,6 +100,11 @@ public class ImageService {
 
             Path filePath = path.resolve(originalFileName);
 
+            // Aynı isimde bir dosya olup olmadığını kontrol et
+            if (Files.exists(filePath)) {
+                throw new RuntimeException("A file with the same name already exists: " + originalFileName);
+            }
+
             file.transferTo(filePath.toFile());
             Image image = new Image(urls,ImageType.COVER);
             post.setCoverImage(image);
