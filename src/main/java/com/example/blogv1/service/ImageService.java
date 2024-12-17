@@ -9,6 +9,7 @@ import com.example.blogv1.exception.ConflictException;
 import com.example.blogv1.exception.NotFoundException;
 import com.example.blogv1.repository.ImageRepository;
 import com.example.blogv1.repository.PostRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -175,6 +176,7 @@ public class ImageService {
 
 
 
+    @Transactional
     public List<String> deleteImageById(List<Integer> imagesId) {
         try {
             List<String> notDeletedImages = new ArrayList<>();
