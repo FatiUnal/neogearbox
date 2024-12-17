@@ -194,13 +194,14 @@ public class ImageService {
 
                     File file = new File(path);
                     if (file.delete()) {
-                        imageRepository.deleteById(image.getId());
+                        image.getPost().getImages().remove(image); // Koleksiyondan kaldır
+                        imageRepository.delete(image);            // Veritabanından sil
+                        postService.savePost(image.getPost());    // Güncellemeyi senkronize et
+
                         s= "File deleted successfully";
                     } else {
                         throw new RuntimeException("Failed to delete file: " + path);
                     }
-
-
 
                     notDeletedImages.add(s);
 
