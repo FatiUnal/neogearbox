@@ -194,8 +194,6 @@ public class ImageService {
 
                     File file = new File(path);
                     if (file.delete()) {
-                        image.getPost().getImages().remove(image);
-                        postService.savePost(image.getPost());
                         imageRepository.deleteById(image.getId());
                         s= "File deleted successfully";
                     } else {
