@@ -60,14 +60,22 @@ public class ImageService {
                     throw new RuntimeException("File name is invalid");
                 }
 
-                Path filePath = path.resolve(originalFileName);
+                String fileExtension = "";
+                int lastIndexOfDot = originalFileName.lastIndexOf(".");
+                if (lastIndexOfDot != -1) {
+                    fileExtension = originalFileName.substring(lastIndexOfDot); // Örneğin ".jpg"
+                }
+
+                String newFileName = UUID.randomUUID().toString() + fileExtension;
+
+                Path filePath = path.resolve(newFileName);
 
                 // Aynı isimde bir dosya var mı kontrol et
                 if (Files.exists(filePath)) {
                     throw new RuntimeException("A file with the name '" + originalFileName + "' already exists.");
                 }
 
-                String urls = url+"upload/images/"+id+"/"+originalFileName;
+                String urls = url+"upload/images/"+id+"/"+newFileName;
 
                 Image image = new Image(urls,post, ImageType.IMAGE);
                 file.transferTo(filePath.toFile());
@@ -102,9 +110,19 @@ public class ImageService {
                 throw new RuntimeException("File name is invalid");
             }
 
-            String urls = url+"upload/cover/"+id+"/"+originalFileName;
+            String fileExtension = "";
+            int lastIndexOfDot = originalFileName.lastIndexOf(".");
+            if (lastIndexOfDot != -1) {
+                fileExtension = originalFileName.substring(lastIndexOfDot); // Örneğin ".jpg"
+            }
 
-            Path filePath = path.resolve(originalFileName);
+            // Benzersiz dosya adı oluştur
+            String newFileName = UUID.randomUUID().toString() + fileExtension;
+
+
+            String urls = url+"upload/cover/"+id+"/"+newFileName;
+
+            Path filePath = path.resolve(newFileName);
 
             file.transferTo(filePath.toFile());
             Image image = new Image(urls,ImageType.COVER);
