@@ -194,6 +194,7 @@ public class ImageService {
 
                     File file = new File(path);
                     if (file.delete()) {
+                        System.out.println("silinen id: "+image.getId());
                         imageRepository.deleteById(image.getId());
                         s= "File deleted successfully";
                     } else {
