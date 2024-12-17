@@ -60,10 +60,16 @@ public class ImageService {
                     throw new RuntimeException("File name is invalid");
                 }
 
+                Path filePath = path.resolve(originalFileName);
+
+                // Aynı isimde bir dosya var mı kontrol et
+                if (Files.exists(filePath)) {
+                    throw new RuntimeException("A file with the name '" + originalFileName + "' already exists.");
+                }
+
                 String urls = url+"upload/images/"+id+"/"+originalFileName;
 
                 Image image = new Image(urls,post, ImageType.IMAGE);
-                Path filePath = path.resolve(originalFileName);
                 file.transferTo(filePath.toFile());
 
                 post.getImages().add(image);
@@ -99,11 +105,6 @@ public class ImageService {
             String urls = url+"upload/cover/"+id+"/"+originalFileName;
 
             Path filePath = path.resolve(originalFileName);
-
-            // Aynı isimde bir dosya olup olmadığını kontrol et
-            if (Files.exists(filePath)) {
-                throw new RuntimeException("A file with the same name already exists: " + originalFileName);
-            }
 
             file.transferTo(filePath.toFile());
             Image image = new Image(urls,ImageType.COVER);
