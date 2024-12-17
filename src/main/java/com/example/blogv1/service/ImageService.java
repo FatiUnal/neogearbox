@@ -194,7 +194,8 @@ public class ImageService {
 
                     File file = new File(path);
                     if (file.delete()) {
-                        System.out.println("silinen id: "+image.getId());
+                        image.getPost().getImages().remove(image);
+                        postService.savePost(image.getPost());
                         imageRepository.deleteById(image.getId());
                         s= "File deleted successfully";
                     } else {
@@ -202,8 +203,7 @@ public class ImageService {
                     }
 
 
-                    image.getPost().getImages().remove(image);
-                    postService.savePost(image.getPost());
+
                     notDeletedImages.add(s);
 
                 }else
