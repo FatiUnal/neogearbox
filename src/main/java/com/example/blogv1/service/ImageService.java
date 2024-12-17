@@ -78,7 +78,7 @@ public class ImageService {
             postService.savePost(post);
 
         } catch (IOException e) {
-            throw new RuntimeException("File upload failed for post ID: " + id, e);
+            throw new ConflictException("image not added");
         }
         return uploadFilesName;
     }
