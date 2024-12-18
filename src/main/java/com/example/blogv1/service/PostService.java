@@ -117,6 +117,9 @@ public class PostService {
         }else if (postRequestDto instanceof HouseRequestDto) {
             HouseListing houseListing = (HouseListing) postDetails;
             houseListing.setBrutMetrekare(((HouseRequestDto) postRequestDto).getBrutMetrekare());
+            houseListing.setFiyat(((HouseRequestDto) postRequestDto).getPrice());
+            houseListing.setSehir(postRequestDto.getSehir());
+            houseListing.setIlce(postRequestDto.getIlce());
             houseListing.setIsitma(((HouseRequestDto) postRequestDto).getIsitma());
             houseListing.setOdaSayisi(((HouseRequestDto) postRequestDto).getOdaSayisi());
             houseListing.setMutfakTipi(((HouseRequestDto) postRequestDto).isMutfakTipi());
