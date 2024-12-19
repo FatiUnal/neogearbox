@@ -192,6 +192,7 @@ public class ImageService {
                     if (image.getType().equals(ImageType.IMAGE)) {
                         String urld = image.getFilename();
                         String path = UPLOAD_DIR+urld.replace(url,"");
+                        System.out.println("path: "+path);
 
                         String s ="";
                         File file = new File(path);
