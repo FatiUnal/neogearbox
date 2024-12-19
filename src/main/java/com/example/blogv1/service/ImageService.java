@@ -137,7 +137,7 @@ public class ImageService {
         }
 
     }
-
+    @Transactional
     public String deleteCoverImage(int postId) {
         Post post = postService.getById(postId);
         if (post.getCoverImage() != null) {
