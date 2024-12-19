@@ -178,40 +178,41 @@ public class ImageService {
 
 
     @Transactional
-    public List<String> deleteImageById(List<Integer> imagesId) {
+    public List<String> deleteImageById(int postId,List<Integer> imagesId) {
         try {
             List<String> notDeletedImages = new ArrayList<>();
 
-            List<Image> images = new ArrayList<>();
-            for (Integer id : imagesId) {
-                Image imageNotFound = imageRepository.findById(id).orElseThrow(() -> new NotFoundException("Image not found"));
-                images.add(imageNotFound);
+
+            Post post = postService.getById(postId);
+            List<Image> postImages = post.getImages();
+
+            for (Integer imageId : imagesId) {
+                Image image = imageRepository.findById(imageId).orElseThrow(()-> new NotFoundException("Image not found"));
+                if (postImages.contains(image)) {
+                    if (image.getType().equals(ImageType.IMAGE)) {
+                        String urld = image.getFilename();
+                        String path = UPLOAD_DIR+urld.replace(url,"");
+
+                        String s ="";
+                        File file = new File(path);
+                        if (file.delete()) {
+                            postImages.remove(image);
+                            postService.savePost(post);
+                            imageRepository.deleteById(imageId);
+
+                            s= "File deleted successfully";
+                        } else {
+                            throw new RuntimeException("Failed to delete file: " + path);
+                        }
+                        notDeletedImages.add(s);
+
+                    }else
+                        throw new BadRequestException("Image type not supported");
+
+                }
+
             }
-            for (Image image : images) {
-                System.out.println(image.getId());
-                if (image.getType().equals(ImageType.IMAGE)) {
-                    String urld = image.getFilename();
-                    String path = UPLOAD_DIR+urld.replace(url,"");
 
-                    String s ="";
-
-                    File file = new File(path);
-                    if (file.delete()) {
-                        image.getPost().getImages().remove(image); // Koleksiyondan kaldır
-                        imageRepository.delete(image);            // Veritabanından sil
-                        postService.savePost(image.getPost());    // Güncellemeyi senkronize et
-
-                        s= "File deleted successfully";
-                    } else {
-                        throw new RuntimeException("Failed to delete file: " + path);
-                    }
-
-                    notDeletedImages.add(s);
-
-                }else
-                    throw new BadRequestException("Image type not supported");
-
-            }
             if (notDeletedImages.isEmpty()) {
                 return List.of("Successfull");
             }else
@@ -228,6 +229,7 @@ public class ImageService {
         return "";
     }
 
+    @Transactional
     public String delete(int postId) {
         Post post = postService.getById(postId);
 
@@ -235,7 +237,7 @@ public class ImageService {
             deleteCoverImage(postId);
         }
         if (post.getImages() != null) {
-            deleteImageById(post.getImages().stream().map(Image::getId).collect(Collectors.toList()));
+            deleteImageById(postId,post.getImages().stream().map(Image::getId).collect(Collectors.toList()));
         }
         postService.delete(post);
 
