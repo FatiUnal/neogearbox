@@ -35,6 +35,7 @@ public class ImageService {
 
     @Value("${spring.file.url}")
     private String urlFile;
+
     private final PostService postService;
     private final ImageRepository imageRepository;
 
@@ -191,7 +192,7 @@ public class ImageService {
                 if (postImages.contains(image)) {
                     if (image.getType().equals(ImageType.IMAGE)) {
                         String urld = image.getFilename();
-                        String path = UPLOAD_DIR+urld.replace(url,"");
+                        String path = UPLOAD_DIR+urld.replace(url+"/upload","");
                         System.out.println("path: "+path);
 
                         String s ="";
