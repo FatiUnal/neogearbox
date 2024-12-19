@@ -35,7 +35,9 @@ public class PostBuilder {
                 post.getContent(),
                 coverImage,
                 images,
-                post.getPostDetails().getFiyat()
+                post.getPostDetails().getFiyat(),
+                post.getPostDetails().getSehir(),
+                post.getPostDetails().getIlce()
         );
     }
 }
