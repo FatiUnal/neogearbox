@@ -192,7 +192,8 @@ public class ImageService {
                 if (postImages.contains(image)) {
                     if (image.getType().equals(ImageType.IMAGE)) {
                         String urld = image.getFilename();
-                        String path = UPLOAD_DIR+urld.replace(url+"/upload","");
+                        System.out.println("urld: "+urld);
+                        String path = UPLOAD_DIR + urld.replace(url+"upload/","");
                         System.out.println("path: "+path);
 
                         String s ="";
