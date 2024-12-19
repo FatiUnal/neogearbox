@@ -190,8 +190,8 @@ public class ImageService {
             for (Image image : images) {
                 System.out.println(image.getId());
                 if (image.getType().equals(ImageType.IMAGE)) {
-                    String url = image.getFilename();
-                    String path = UPLOAD_DIR+url.replace("litysofttest.site/upload/","");
+                    String urld = image.getFilename();
+                    String path = UPLOAD_DIR+urld.replace(url,"");
 
                     String s ="";
 
