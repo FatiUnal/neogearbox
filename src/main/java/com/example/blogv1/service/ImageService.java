@@ -45,6 +45,7 @@ public class ImageService {
     }
 
     public List<String> uploadImage(MultipartFile[] files, int id) {
+        System.out.println("uploadImage");
         Post post = postService.getById(id);
 
         List<String> uploadFilesName = new ArrayList<>();
