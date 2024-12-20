@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @Service
 public class ImageService {
     @Value("${upload.dir}")
-    private String UPLOAD_DIR;
+    private String uploadDir;
     @Value("${spring.url}")
     private String url;
 
@@ -51,7 +51,7 @@ public class ImageService {
 
         List<String> uploadFilesName = new ArrayList<>();
         try {
-            Path path = Paths.get(UPLOAD_DIR+"images/"+id+"/");
+            Path path = Paths.get(uploadDir+"images/"+id+"/");
             if (!Files.exists(path)) {
                 Files.createDirectories(path);
             }
@@ -78,7 +78,7 @@ public class ImageService {
                     throw new RuntimeException("A file with the name '" + originalFileName + "' already exists.");
                 }
 
-                String urls = url+"upload/images/"+id+"/"+newFileName;
+                String urls = url+"api/upload/images/"+id+"/"+newFileName;
 
                 Image image = new Image(urls,post, ImageType.IMAGE);
                 file.transferTo(filePath.toFile());
@@ -103,7 +103,7 @@ public class ImageService {
         }
 
         try {
-            Path path = Paths.get(UPLOAD_DIR+"cover/"+id+"/");
+            Path path = Paths.get(uploadDir+"cover/"+id+"/");
             if (!Files.exists(path)) {
                 Files.createDirectories(path);
             }
@@ -123,7 +123,7 @@ public class ImageService {
             String newFileName = UUID.randomUUID().toString() + fileExtension;
 
 
-            String urls = url+"upload/cover/"+id+"/"+newFileName;
+            String urls = url+"api/upload/cover/"+id+"/"+newFileName;
 
             Path filePath = path.resolve(newFileName);
 
@@ -143,7 +143,7 @@ public class ImageService {
         Post post = postService.getById(postId);
         if (post.getCoverImage() != null) {
             String coverImage = post.getCoverImage().getFilename();
-            String path = coverImage.replace(urlFile,UPLOAD_DIR);
+            String path = coverImage.replace(urlFile,uploadDir);
             File file = new File(path);
             if (file.delete()) { // Dosya silinir.
                 int id = post.getCoverImage().getId();
@@ -162,7 +162,7 @@ public class ImageService {
         Image image = imageRepository.findById(imageId).orElseThrow(()-> new NotFoundException("Image not found"));
 
         try {
-            Path path = Paths.get(UPLOAD_DIR+"images/"+image.getPost().getId()+"/"+image.getFilename());
+            Path path = Paths.get(uploadDir+"images/"+image.getPost().getId()+"/"+image.getFilename());
             Resource resource = new UrlResource(path.toUri());
             String contentType = Files.probeContentType(path);
             if (!resource.exists()) {
@@ -193,7 +193,7 @@ public class ImageService {
                     if (image.getType().equals(ImageType.IMAGE)) {
                         String urld = image.getFilename();
                         System.out.println("urld: "+urld);
-                        String path = UPLOAD_DIR + urld.replace(url+"upload/","");
+                        String path = uploadDir + urld.replace(urlFile,"");
                         System.out.println("path: "+path);
 
                         String s ="";
