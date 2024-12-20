@@ -223,8 +223,6 @@ public class ImageService {
 
         }catch (NumberFormatException e) {
             throw new BadRequestException("Geçersiz data");
-        }catch (RuntimeException e) {
-            throw new ConflictException("Failed to delete images");
         }
     }
 
