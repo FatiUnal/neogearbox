@@ -11,8 +11,9 @@ public class PostSmallDto {
     private String price;
     private String sehir;
     private String ilce;
+    private String odaSayisi;
 
-    public PostSmallDto(int id, String title, String content, String coverImage, List<String> images, String price, String sehir, String ilce) {
+    public PostSmallDto(int id, String title, String content, String coverImage, List<String> images, String price, String sehir, String ilce, String odaSayisi) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -21,6 +22,7 @@ public class PostSmallDto {
         this.price = price;
         this.sehir = sehir;
         this.ilce = ilce;
+        this.odaSayisi = odaSayisi;
     }
 
     public int getId() {
@@ -81,5 +83,13 @@ public class PostSmallDto {
 
     public void setIlce(String ilce) {
         this.ilce = ilce;
+    }
+
+    public String getOdaSayisi() {
+        return odaSayisi;
+    }
+
+    public void setOdaSayisi(String odaSayisi) {
+        this.odaSayisi = odaSayisi;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.blogv1.builder;
 
 import com.example.blogv1.dto.PostSmallDto;
+import com.example.blogv1.entity.post.HouseListing;
 import com.example.blogv1.entity.post.Image;
 import com.example.blogv1.entity.post.Post;
 import org.springframework.stereotype.Component;
@@ -37,7 +38,8 @@ public class PostBuilder {
                 images,
                 post.getPostDetails().getFiyat(),
                 post.getPostDetails().getSehir(),
-                post.getPostDetails().getIlce()
+                post.getPostDetails().getIlce(),
+                ((HouseListing)post.getPostDetails()).getOdaSayisi()
         );
     }
 }

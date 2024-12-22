@@ -3,6 +3,7 @@ package com.example.blogv1.Config;
 import com.example.blogv1.filter.JwtAuthorizationFilter;
 import com.example.blogv1.service.CustomUserDetailService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -36,6 +37,8 @@ public class SecurityConfig {
     private final CustomUserDetailService customUserDetailService;
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
+    @Value("${spring.cors.url}")
+    private String url;
     public SecurityConfig(CustomUserDetailService customUserDetailService, JwtAuthorizationFilter jwtAuthorizationFilter) {
         this.customUserDetailService = customUserDetailService;
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
@@ -96,7 +99,7 @@ public class SecurityConfig {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration ccfg = new CorsConfiguration();
-                ccfg.setAllowedOrigins(List.of("https://litysofttest.site", "http://localhost","http://localhost:5173"));
+                ccfg.setAllowedOrigins(List.of(url, "http://localhost","http://localhost:5173"));
                 ccfg.setAllowedMethods(Collections.singletonList("*"));
                 ccfg.setAllowCredentials(true);
                 ccfg.setAllowedHeaders(Collections.singletonList("*"));
