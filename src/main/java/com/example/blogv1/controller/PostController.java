@@ -61,7 +61,7 @@ public class PostController {
     @GetMapping("/small")
     public ResponseEntity<List<PostSmallDto>> getSmallPosts(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "50") int size) {
         return new ResponseEntity<>(postService.getPaginatedPosts(page, size),HttpStatus.OK);
     }
 
