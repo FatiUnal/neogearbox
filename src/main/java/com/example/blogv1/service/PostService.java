@@ -11,6 +11,8 @@ import com.example.blogv1.repository.OrderPostRepository;
 import com.example.blogv1.repository.PostRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -39,8 +41,9 @@ public class PostService {
         return postRepository.findById(id).orElseThrow(() -> new NotFoundException("No Post found: "));
     }
 
-    public Post create(PostRequestDto postRequestDto,String username) {
-        Admin admin = adminService.getByUsername(username);
+    public Post create(PostRequestDto postRequestDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Admin admin = adminService.getByUsername(authentication.getPrincipal().toString());
         PostDetails postDetails = null;
         if (postRequestDto instanceof LandRequestDto) {
             
