@@ -8,21 +8,14 @@ public class PostSmallDto {
     private String content;
     private String coverImage;
     private List<String> images;
-    private String price;
-    private String sehir;
-    private String ilce;
-    private String odaSayisi;
 
-    public PostSmallDto(int id, String title, String content, String coverImage, List<String> images, String price, String sehir, String ilce, String odaSayisi) {
+
+    public PostSmallDto(int id, String title, String content, String coverImage, List<String> images) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.coverImage = coverImage;
         this.images = images;
-        this.price = price;
-        this.sehir = sehir;
-        this.ilce = ilce;
-        this.odaSayisi = odaSayisi;
     }
 
     public int getId() {
@@ -61,35 +54,4 @@ public class PostSmallDto {
         return images;
     }
 
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getSehir() {
-        return sehir;
-    }
-
-    public void setSehir(String sehir) {
-        this.sehir = sehir;
-    }
-
-    public String getIlce() {
-        return ilce;
-    }
-
-    public void setIlce(String ilce) {
-        this.ilce = ilce;
-    }
-
-    public String getOdaSayisi() {
-        return odaSayisi;
-    }
-
-    public void setOdaSayisi(String odaSayisi) {
-        this.odaSayisi = odaSayisi;
-    }
 }

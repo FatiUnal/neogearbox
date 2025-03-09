@@ -28,6 +28,7 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<List<Post>> getAllList(){
+        System.out.println("getAllList");
         return new ResponseEntity<>(postService.findAll(),HttpStatus.OK);
     }
 
@@ -35,11 +36,6 @@ public class PostController {
     @GetMapping("/get-by-id")
     public ResponseEntity<Post> getById(@RequestParam int id){
         return new ResponseEntity<>(postService.getById(id),HttpStatus.OK);
-    }
-
-    @GetMapping("/get-ilan")
-    public ResponseEntity<Post> getByIlan(@RequestParam String ilan){
-        return new ResponseEntity<>(postService.getByIlanNo(ilan),HttpStatus.OK);
     }
 
     @PutMapping
@@ -65,11 +61,6 @@ public class PostController {
         return new ResponseEntity<>(postService.getPaginatedPosts(page, size),HttpStatus.OK);
     }
 
-
-    @GetMapping("/estate")
-    public ResponseEntity<List<Post>> getEstatePosts(@RequestParam String estate){
-        return new ResponseEntity<>(postService.getEstatePosts(estate),HttpStatus.OK);
-    }
 
 
 

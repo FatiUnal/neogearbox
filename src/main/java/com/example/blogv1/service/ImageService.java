@@ -97,6 +97,7 @@ public class ImageService {
     public String uploadCoverImage(MultipartFile file, int id) {
 
         Post post = postService.getById(id);
+        System.out.println("uploadCoverImage");
 
         if (post.getCoverImage() != null) {
             deleteCoverImage(id);

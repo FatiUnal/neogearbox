@@ -1,33 +1,33 @@
 services:
-  blog:
+  bake:
     build:
       context: .
-    container_name: blog
+    container_name: bake
     depends_on:
-      - blogdatabase
+      - bakedatabase
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://blogdatabase:5432/blog
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://bakedatabase:5432/bake
     ports:
-      - "8080:8080"
+      - "8081:8081"
     volumes:
       - /var/www/upload:/var/www/upload
     networks:
       - mynetwork
 
-  blogdatabase:
+  bakedatabase:
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
       timeout: 5s
       retries: 5
     image: postgres
-    container_name: blogdatabase
+    container_name: bakedatabase
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=blog
+      - POSTGRES_DB=bake
     ports:
       - "5432:5432"
     volumes:
