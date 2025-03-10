@@ -35,6 +35,11 @@ public class ImageService {
 
     @Value("${spring.file.url}")
     private String urlFile;
+    /*
+    spring.web.resources.static-locations=file:/var/www/upload/bakebond
+    spring.url=http://localhost:8081/
+    spring.file.url=http://localhost:8081/api/v1/upload/
+     */
 
     private final PostService postService;
     private final ImageRepository imageRepository;
@@ -78,7 +83,7 @@ public class ImageService {
                     throw new RuntimeException("A file with the name '" + originalFileName + "' already exists.");
                 }
 
-                String urls = url+"api/upload/images/"+id+"/"+newFileName;
+                String urls = url+"api/v1/upload/bake/images/"+id+"/"+newFileName;
 
                 Image image = new Image(urls,post, ImageType.IMAGE);
                 file.transferTo(filePath.toFile());
@@ -124,7 +129,7 @@ public class ImageService {
             String newFileName = UUID.randomUUID().toString() + fileExtension;
 
 
-            String urls = url+"api/upload/cover/"+id+"/"+newFileName;
+            String urls = url+"api/v1/upload/bake/cover/"+id+"/"+newFileName;
 
             Path filePath = path.resolve(newFileName);
 
