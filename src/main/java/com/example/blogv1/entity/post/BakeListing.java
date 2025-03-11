@@ -9,7 +9,6 @@ import jakarta.persistence.Table;
 public class BakeListing extends PostDetails{
 
     private String portion;
-    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
     private String animalProduct;
     private String shelfLife;
     private String netQuantity;
