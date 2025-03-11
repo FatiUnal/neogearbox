@@ -10,12 +10,12 @@ public class BakeListing extends PostDetails{
 
     private String portion;
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean animalProduct;
+    private String animalProduct;
     private String shelfLife;
     private String netQuantity;
 
 
-    public BakeListing(String categoryName, String portion, boolean animalProduct, String shelfLife, String netQuantity) {
+    public BakeListing(String categoryName, String portion, String animalProduct, String shelfLife, String netQuantity) {
         super(categoryName);
         this.portion = portion;
         this.animalProduct = animalProduct;
@@ -35,11 +35,11 @@ public class BakeListing extends PostDetails{
         this.portion = portion;
     }
 
-    public boolean isAnimalProduct() {
+    public String isAnimalProduct() {
         return animalProduct;
     }
 
-    public void setAnimalProduct(boolean animalProduct) {
+    public void setAnimalProduct(String animalProduct) {
         this.animalProduct = animalProduct;
     }
 
