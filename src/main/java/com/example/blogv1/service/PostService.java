@@ -43,10 +43,12 @@ public class PostService {
     public Post create(PostRequestDto postRequestDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Admin admin = adminService.getByUsername(authentication.getPrincipal().toString());
-        PostDetails postDetails = null;
-        if (postRequestDto instanceof BakeRequestDto) {
-            BakeRequestDto bakeRequestDto = (BakeRequestDto) postRequestDto;
-            postDetails = new BakeListing(bakeRequestDto.getBake());
+        PostDetails postDetails;
+        if (postRequestDto instanceof BakeRequestDto bakeRequestDto) {
+            postDetails = new BakeListing(bakeRequestDto.getPortion(),
+                    bakeRequestDto.isAnimalProduct(),
+                    bakeRequestDto.getShelfLife(),
+                    bakeRequestDto.getNetQuantity());
             
         }else
             throw new BadRequestException("Geçersiz veri girişi");
@@ -66,9 +68,11 @@ public class PostService {
         post.setTitle(postRequestDto.getTitle());
         post.setContent(postRequestDto.getContent());
 
-        if (postRequestDto instanceof BakeRequestDto) {
-            BakeListing bakeListing = (BakeListing) postDetails;
-            ((BakeListing) postDetails).setBake(bakeListing.getBake());
+        if (postRequestDto instanceof BakeRequestDto bakeRequestDto) {
+            postDetails = new BakeListing(bakeRequestDto.getPortion(),
+                    bakeRequestDto.isAnimalProduct(),
+                    bakeRequestDto.getShelfLife(),
+                    bakeRequestDto.getNetQuantity());
 
         }else
             throw new BadRequestException("Geçersiz veri girişi");
