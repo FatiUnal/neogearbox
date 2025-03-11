@@ -7,8 +7,8 @@ public class BakeRequestDto extends PostRequestDto{
     private String shelfLife;
     private String netQuantity;
 
-    public BakeRequestDto(String title, String content, String portion, boolean animalProduct, String shelfLife, String netQuantity) {
-        super(title, content);
+    public BakeRequestDto(String title, String titleContent, String content, String categoryName, String portion, boolean animalProduct, String shelfLife, String netQuantity) {
+        super(title, titleContent, content, categoryName);
         this.portion = portion;
         this.animalProduct = animalProduct;
         this.shelfLife = shelfLife;

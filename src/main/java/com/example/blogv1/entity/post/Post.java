@@ -14,6 +14,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
+    private String titleContent;
     @Column(length = 5000)  // Maksimum 5000 karakter
     private String content;
     @OneToOne(cascade = CascadeType.ALL)
@@ -37,8 +38,9 @@ public class Post {
     public Post() {
         this.createdAt = LocalDateTime.now();
     }
-    public Post(String title, String content, Admin admin, PostDetails postDetails) {
+    public Post(String title, String titleContent, String content, Admin admin, PostDetails postDetails) {
         this.title = title;
+        this.titleContent = titleContent;
         this.content = content;
         this.admin = admin;
         this.postDetails = postDetails;
@@ -99,5 +101,13 @@ public class Post {
 
     public void setPostDetails(PostDetails postDetails) {
         this.postDetails = postDetails;
+    }
+
+    public String getTitleContent() {
+        return titleContent;
+    }
+
+    public void setTitleContent(String titleContent) {
+        this.titleContent = titleContent;
     }
 }

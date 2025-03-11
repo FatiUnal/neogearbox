@@ -45,7 +45,9 @@ public class PostService {
         Admin admin = adminService.getByUsername(authentication.getPrincipal().toString());
         PostDetails postDetails;
         if (postRequestDto instanceof BakeRequestDto bakeRequestDto) {
-            postDetails = new BakeListing(bakeRequestDto.getPortion(),
+            postDetails = new BakeListing(
+                    bakeRequestDto.getCategoryName(),
+                    bakeRequestDto.getPortion(),
                     bakeRequestDto.isAnimalProduct(),
                     bakeRequestDto.getShelfLife(),
                     bakeRequestDto.getNetQuantity());
@@ -55,6 +57,7 @@ public class PostService {
 
         Post post = new Post(
                 postRequestDto.getTitle(),
+                postRequestDto.getTitleContent(),
                 postRequestDto.getContent(),
                 admin,
                 postDetails
@@ -69,7 +72,9 @@ public class PostService {
         post.setContent(postRequestDto.getContent());
 
         if (postRequestDto instanceof BakeRequestDto bakeRequestDto) {
-            postDetails = new BakeListing(bakeRequestDto.getPortion(),
+            postDetails = new BakeListing(
+                    bakeRequestDto.getCategoryName(),
+                    bakeRequestDto.getPortion(),
                     bakeRequestDto.isAnimalProduct(),
                     bakeRequestDto.getShelfLife(),
                     bakeRequestDto.getNetQuantity());

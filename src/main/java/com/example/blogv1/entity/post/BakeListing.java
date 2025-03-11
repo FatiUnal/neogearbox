@@ -15,7 +15,8 @@ public class BakeListing extends PostDetails{
     private String netQuantity;
 
 
-    public BakeListing(String portion, boolean animalProduct, String shelfLife, String netQuantity) {
+    public BakeListing(String categoryName, String portion, boolean animalProduct, String shelfLife, String netQuantity) {
+        super(categoryName);
         this.portion = portion;
         this.animalProduct = animalProduct;
         this.shelfLife = shelfLife;

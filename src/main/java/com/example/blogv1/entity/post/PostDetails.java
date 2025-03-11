@@ -10,6 +10,11 @@ public abstract class PostDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String categoryName;
+
+    public PostDetails(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
     public PostDetails() {
     }
@@ -23,4 +28,11 @@ public abstract class PostDetails {
         this.id = id;
     }
 
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 }
