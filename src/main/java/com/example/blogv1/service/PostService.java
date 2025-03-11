@@ -70,6 +70,7 @@ public class PostService {
         PostDetails postDetails = post.getPostDetails();
         post.setTitle(postRequestDto.getTitle());
         post.setContent(postRequestDto.getContent());
+        post.setTitleContent(postRequestDto.getTitleContent());
 
         if (postRequestDto instanceof BakeRequestDto bakeRequestDto) {
             postDetails = new BakeListing(
