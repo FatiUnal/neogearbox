@@ -30,6 +30,7 @@ public class PostBuilder {
         return new PostSmallDto(
                 post.getId(),
                 post.getTitle(),
+                post.getTitleContent(),
                 post.getContent(),
                 coverImage,
                 images

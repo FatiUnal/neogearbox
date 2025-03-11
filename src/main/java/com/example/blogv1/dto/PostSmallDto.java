@@ -5,14 +5,16 @@ import java.util.List;
 public class PostSmallDto {
     private int id;
     private String title;
+    private String titleContent;
     private String content;
     private String coverImage;
     private List<String> images;
 
 
-    public PostSmallDto(int id, String title, String content, String coverImage, List<String> images) {
+    public PostSmallDto(int id, String title, String titleContent, String content, String coverImage, List<String> images) {
         this.id = id;
         this.title = title;
+        this.titleContent = titleContent;
         this.content = content;
         this.coverImage = coverImage;
         this.images = images;
@@ -54,4 +56,11 @@ public class PostSmallDto {
         return images;
     }
 
+    public String getTitleContent() {
+        return titleContent;
+    }
+
+    public void setTitleContent(String titleContent) {
+        this.titleContent = titleContent;
+    }
 }
