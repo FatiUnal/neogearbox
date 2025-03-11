@@ -1,6 +1,5 @@
 package com.example.blogv1.entity.post;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -34,7 +33,7 @@ public class BakeListing extends PostDetails{
         this.portion = portion;
     }
 
-    public String isAnimalProduct() {
+    public String getAnimalProduct() {
         return animalProduct;
     }
 
