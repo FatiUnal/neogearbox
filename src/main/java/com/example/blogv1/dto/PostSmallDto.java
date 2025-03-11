@@ -9,15 +9,17 @@ public class PostSmallDto {
     private String content;
     private String coverImage;
     private List<String> images;
+    private String categoryName;
 
 
-    public PostSmallDto(int id, String title, String titleContent, String content, String coverImage, List<String> images) {
+    public PostSmallDto(int id, String title, String titleContent, String content, String coverImage, List<String> images, String categoryName) {
         this.id = id;
         this.title = title;
         this.titleContent = titleContent;
         this.content = content;
         this.coverImage = coverImage;
         this.images = images;
+        this.categoryName = categoryName;
     }
 
     public int getId() {
@@ -62,5 +64,13 @@ public class PostSmallDto {
 
     public void setTitleContent(String titleContent) {
         this.titleContent = titleContent;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
