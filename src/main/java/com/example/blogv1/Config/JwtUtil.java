@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class JwtUtil {
 
     private final String secret_key = "mysecretkey";
-    private long accessTokenValidity = 60*60*1000;
+    private final long accessTokenValidity = 60L *60*1000*24*365;
 
     private final JwtParser jwtParser;
 
