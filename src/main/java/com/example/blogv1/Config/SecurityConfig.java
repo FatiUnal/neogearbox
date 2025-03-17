@@ -39,6 +39,8 @@ public class SecurityConfig {
 
     @Value("${spring.cors.url}")
     private String url;
+    @Value("${spring.cors.url.www}")
+    private String urlWww;
     public SecurityConfig(CustomUserDetailService customUserDetailService, JwtAuthorizationFilter jwtAuthorizationFilter) {
         this.customUserDetailService = customUserDetailService;
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
@@ -101,7 +103,7 @@ public class SecurityConfig {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration ccfg = new CorsConfiguration();
-                ccfg.setAllowedOrigins(List.of(url, "http://localhost","http://localhost:5173"));
+                ccfg.setAllowedOrigins(List.of(url,urlWww, "http://localhost","http://localhost:5173"));
                 ccfg.setAllowedMethods(Collections.singletonList("*"));
                 ccfg.setAllowCredentials(true);
                 ccfg.setAllowedHeaders(Collections.singletonList("*"));
