@@ -150,6 +150,9 @@ public class ImageService {
         if (post.getCoverImage() != null) {
             String coverImage = post.getCoverImage().getFilename();
             String path = coverImage.replace(urlFile,uploadDir);
+            //url file :http://localhost:8081/api/v1/upload/  upload dir:/var/www/upload/bake/
+            System.out.println("path:          "+path);
+            //http://localhost:8081/api/v1/upload/bake/images/1/91eaf823-795a-4510-83e9-1954d022035d.jpeg
             File file = new File(path);
             if (file.delete()) { // Dosya silinir.
                 int id = post.getCoverImage().getId();

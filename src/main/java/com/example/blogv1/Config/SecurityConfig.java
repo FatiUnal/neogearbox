@@ -67,6 +67,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/api/v1/post/small").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/v1/post/status").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/v1/post/estate").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/post/category").permitAll()
 
                         .requestMatchers(HttpMethod.POST,"/api/v1/image").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/v1/image/cover").hasAuthority("ROLE_ADMIN")

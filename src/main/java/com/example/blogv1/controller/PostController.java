@@ -61,6 +61,13 @@ public class PostController {
         return new ResponseEntity<>(postService.getPaginatedPosts(page, size),HttpStatus.OK);
     }
 
+    @GetMapping("/category")
+    public ResponseEntity<List<PostSmallDto>> getCategoryPosts(@RequestParam String category,
+                                                               @RequestParam(defaultValue = "0") int page,
+                                                               @RequestParam(defaultValue = "10") int size) {
+        return new ResponseEntity<>(postService.getCategoryPosts(category,page,size),HttpStatus.OK);
+    }
+
 
 
 

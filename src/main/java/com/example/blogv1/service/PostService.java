@@ -11,6 +11,7 @@ import com.example.blogv1.repository.OrderPostRepository;
 import com.example.blogv1.repository.PostRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -46,11 +47,7 @@ public class PostService {
         PostDetails postDetails;
         if (postRequestDto instanceof BakeRequestDto bakeRequestDto) {
             postDetails = new BakeListing(
-                    bakeRequestDto.getCategoryName(),
-                    bakeRequestDto.getPortion(),
-                    bakeRequestDto.isAnimalProduct(),
-                    bakeRequestDto.getShelfLife(),
-                    bakeRequestDto.getNetQuantity());
+                    bakeRequestDto.getCategoryName());
             
         }else
             throw new BadRequestException("Geçersiz veri girişi");
@@ -74,11 +71,7 @@ public class PostService {
 
         if (postRequestDto instanceof BakeRequestDto bakeRequestDto) {
             postDetails = new BakeListing(
-                    bakeRequestDto.getCategoryName(),
-                    bakeRequestDto.getPortion(),
-                    bakeRequestDto.isAnimalProduct(),
-                    bakeRequestDto.getShelfLife(),
-                    bakeRequestDto.getNetQuantity());
+                    bakeRequestDto.getCategoryName());
 
         }else
             throw new BadRequestException("Geçersiz veri girişi");
@@ -128,5 +121,10 @@ public class PostService {
 
     public boolean existsById(int postId) {
         return postRepository.existsById(postId);
+    }
+
+    public List<PostSmallDto> getCategoryPosts(String category,int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "title"));
+        return postRepository.findByCategoryName(category,pageable).stream().map(postBuilder::postToPostSmallDto).toList();
     }
 }

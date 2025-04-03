@@ -16,8 +16,6 @@ public class PostRequestDto {
     private String content;
     private String categoryName;
 
-    public PostRequestDto() {}
-
     public PostRequestDto(String title, String titleContent, String content, String categoryName) {
         this.title = title;
         this.titleContent = titleContent;
