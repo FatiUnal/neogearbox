@@ -6,7 +6,7 @@ import jakarta.persistence.Column;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")  // Gelen JSON'dan 'type' değerine göre doğru sınıf seçilecek.
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = BakeRequestDto.class, name = "bake")
+        @JsonSubTypes.Type(value = KwRequestDto.class, name = "kw")
 })
 public class PostRequestDto {
     private String title;

@@ -83,7 +83,7 @@ public class ImageService {
                     throw new RuntimeException("A file with the name '" + originalFileName + "' already exists.");
                 }
 
-                String urls = url+"api/v1/upload/bake/images/"+id+"/"+newFileName;
+                String urls = url+"api/v1/upload/kw/images/"+id+"/"+newFileName;
 
                 Image image = new Image(urls,post, ImageType.IMAGE);
                 file.transferTo(filePath.toFile());
@@ -129,7 +129,7 @@ public class ImageService {
             String newFileName = UUID.randomUUID().toString() + fileExtension;
 
 
-            String urls = url+"api/v1/upload/bake/cover/"+id+"/"+newFileName;
+            String urls = url+"api/v1/upload/kw/cover/"+id+"/"+newFileName;
 
             Path filePath = path.resolve(newFileName);
 

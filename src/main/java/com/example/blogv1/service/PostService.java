@@ -45,9 +45,9 @@ public class PostService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Admin admin = adminService.getByUsername(authentication.getPrincipal().toString());
         PostDetails postDetails;
-        if (postRequestDto instanceof BakeRequestDto bakeRequestDto) {
-            postDetails = new BakeListing(
-                    bakeRequestDto.getCategoryName());
+        if (postRequestDto instanceof KwRequestDto kwRequestDto) {
+            postDetails = new KwListing(
+                    kwRequestDto.getCategoryName());
             
         }else
             throw new BadRequestException("Geçersiz veri girişi");
@@ -69,9 +69,9 @@ public class PostService {
         post.setContent(postRequestDto.getContent());
         post.setTitleContent(postRequestDto.getTitleContent());
 
-        if (postRequestDto instanceof BakeRequestDto bakeRequestDto) {
-            postDetails = new BakeListing(
-                    bakeRequestDto.getCategoryName());
+        if (postRequestDto instanceof KwRequestDto kwRequestDto) {
+            postDetails = new KwListing(
+                    kwRequestDto.getCategoryName());
 
         }else
             throw new BadRequestException("Geçersiz veri girişi");

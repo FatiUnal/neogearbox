@@ -77,7 +77,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE,"/api/v1/image/cover-delete").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/api/v1/image/delete-by-id").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/api/v1/image/post").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.GET,"/api/upload/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/upload/**").permitAll()
 
                         .requestMatchers("/swagger-ui/index.html","/swagger-ui/**","/v3/api-docs/**").permitAll()
 
