@@ -10,8 +10,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // /upload/** yolunu /var/www/uploads/ dizinine yönlendir
-        registry.addResourceHandler("/api/v1/upload/bake/**")
-                .addResourceLocations("file:/var/www/upload/bake/")
+        registry.addResourceHandler("/api/v1/upload/kw/**")
+                .addResourceLocations("file:/var/www/upload/kw/")
                 .setCachePeriod(3600) // İsteğe bağlı: Cache süresini ayarlar (saniye cinsinden)
                 .resourceChain(true);
     }

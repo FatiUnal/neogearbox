@@ -1,33 +1,33 @@
 services:
-  bake:
+  kw:
     build:
       context: .
-    container_name: bake
+    container_name: kw
     depends_on:
-      - bakedatabase
+      - kwdatabase
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://bakedatabase:5432/bake
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://kwdatabase:5432/kw
     ports:
-      - "8081:8081"
+      - "8082:8082"
     volumes:
       - /var/www/upload:/var/www/upload
     networks:
       - mynetwork
 
-  bakedatabase:
+  kwdatabase:
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
       timeout: 5s
       retries: 5
     image: postgres
-    container_name: bakedatabase
+    container_name: kwdatabase
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=bake
+      - POSTGRES_DB=kw
     ports:
       - "5432:5432"
     volumes:
