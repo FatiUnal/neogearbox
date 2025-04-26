@@ -78,8 +78,15 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE,"/api/v1/image/delete-by-id").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/api/v1/image/post").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET,"/api/v1/upload/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v1/image/category").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/api/v1/image/category").hasAuthority("ROLE_ADMIN")
 
                         .requestMatchers("/swagger-ui/index.html","/swagger-ui/**","/v3/api-docs/**").permitAll()
+
+                        .requestMatchers(HttpMethod.GET,"/api/v1/category").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/category/get-by-id").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v1/category").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/v1/category").hasAuthority("ROLE_ADMIN")
 
                         .requestMatchers("/error/**").permitAll()
                         .anyRequest().authenticated())

@@ -62,7 +62,7 @@ public class PostController {
     }
 
     @GetMapping("/category")
-    public ResponseEntity<List<PostSmallDto>> getCategoryPosts(@RequestParam String category,
+    public ResponseEntity<List<PostSmallDto>> getCategoryPosts(@RequestParam int category,
                                                                @RequestParam(defaultValue = "0") int page,
                                                                @RequestParam(defaultValue = "10") int size) {
         return new ResponseEntity<>(postService.getCategoryPosts(category,page,size),HttpStatus.OK);

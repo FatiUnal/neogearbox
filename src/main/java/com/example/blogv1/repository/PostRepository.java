@@ -10,6 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
-    @Query("SELECT p FROM Post p WHERE p.postDetails.categoryName = :categoryName")
-    List<Post> findByCategoryName(@Param("categoryName") String categoryName, Pageable pageable);
+    @Query("SELECT p FROM Post p WHERE p.postDetails.category.id = :categoryId")
+    List<Post> findByCategoryId(@Param("categoryId") int categoryId, Pageable pageable);
 }

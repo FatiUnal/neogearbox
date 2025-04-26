@@ -1,6 +1,7 @@
 package com.example.blogv1.service;
 
 import com.example.blogv1.dto.PostImagerOrderRequestDto;
+import com.example.blogv1.entity.post.Category;
 import com.example.blogv1.entity.post.Image;
 import com.example.blogv1.entity.post.ImageType;
 import com.example.blogv1.entity.post.Post;
@@ -43,11 +44,13 @@ public class ImageService {
 
     private final PostService postService;
     private final ImageRepository imageRepository;
+    private final CategoryService categoryService;
 
-    public ImageService(PostService postService, ImageRepository imageRepository) {
+    public ImageService(PostService postService, ImageRepository imageRepository, CategoryService categoryService) {
         this.postService = postService;
         this.imageRepository = imageRepository;
 
+        this.categoryService = categoryService;
     }
 
     public List<String> uploadImage(MultipartFile[] files, int id) {
@@ -142,8 +145,75 @@ public class ImageService {
         } catch (IOException e) {
             throw new RuntimeException("File upload failed for post ID: " + id, e);
         }
-
     }
+
+    public String uploadCategory(MultipartFile file, int id) {
+        Category category = categoryService.findById(id);
+        System.out.println("uploadCategory");
+
+        if (category.getCoverImage() != null) {
+            deleteCategory(id);
+        }
+
+        try {
+            Path path = Paths.get(uploadDir+"category/"+id+"/");
+            if (!Files.exists(path)) {
+                Files.createDirectories(path);
+            }
+
+            String originalFileName = file.getOriginalFilename();
+            if (originalFileName == null || originalFileName.isEmpty()) {
+                throw new RuntimeException("File name is invalid");
+            }
+
+            String fileExtension = "";
+            int lastIndexOfDot = originalFileName.lastIndexOf(".");
+            if (lastIndexOfDot != -1) {
+                fileExtension = originalFileName.substring(lastIndexOfDot); // Örneğin ".jpg"
+            }
+
+
+            // Benzersiz dosya adı oluştur
+            String newFileName = UUID.randomUUID().toString() + fileExtension;
+
+
+            String urls = url+"api/v1/upload/kw/category/"+id+"/"+newFileName;
+
+            Path filePath = path.resolve(newFileName);
+            file.transferTo(filePath.toFile());
+            Image image = new Image(urls,ImageType.CATEGORY);
+            category.setCoverImage(image);
+            categoryService.saveCategory(category);
+            return urls;
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Transactional
+    public String deleteCategory(int id) {
+        Category category = categoryService.findById(id);
+        if (category.getCoverImage() != null) {
+            String coverImage = category.getCoverImage().getFilename();
+            String path = coverImage.replace(urlFile, uploadDir);
+
+            System.out.println("path:          "+path);
+            File file = new File(path);
+            if (file.delete()) { // Dosya silinir.
+                int ids = category.getCoverImage().getId();
+                category.setCoverImage(null);
+                categoryService.saveCategory(category);
+                imageRepository.deleteById(ids);
+                return "File deleted successfully";
+            } else {
+                throw new RuntimeException("Failed to delete file: " + path);
+            }
+        }else
+            throw new ConflictException("Image not found");
+    }
+
+
     @Transactional
     public String deleteCoverImage(int postId) {
         Post post = postService.getById(postId);
@@ -257,5 +327,7 @@ public class ImageService {
         else
             return "Post Deleted Successfully";
     }
+
+
 }
 

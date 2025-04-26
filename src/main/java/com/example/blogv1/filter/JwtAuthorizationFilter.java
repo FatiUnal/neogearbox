@@ -2,14 +2,19 @@ package com.example.blogv1.filter;
 
 import com.example.blogv1.Config.ApplicationConstant;
 import com.example.blogv1.Config.JwtUtil;
+import com.example.blogv1.exception.NotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -32,6 +37,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -62,8 +69,18 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
-            }catch (Exception e){
-                throw new BadCredentialsException("Invalid Token received");
+            } catch (ExpiredJwtException ex) {
+                logger.error("JWT expired: {}", ex.getMessage());
+                writeErrorResponse(response, HttpStatus.UNAUTHORIZED, "Token expired", request);
+                return;
+            } catch (JwtException | IllegalArgumentException ex) {
+                logger.error("Invalid JWT: {}", ex.getMessage());
+                writeErrorResponse(response, HttpStatus.UNAUTHORIZED, "Invalid token", request);
+                return;
+            }catch (NotFoundException ex){
+                logger.error("User not found: {}", ex.getMessage());
+                writeErrorResponse(response, HttpStatus.NOT_FOUND, "User not found", request);
+                return;
             }
         }
         filterChain.doFilter(request,response);
@@ -74,5 +91,28 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         System.out.println("req: "+request.getServletPath());
         return request.getServletPath() != null &&  request.getServletPath().startsWith("/api/v1/auth/") || request.getServletPath().startsWith("/api/v1/admin");
 
+    }
+
+    private void writeErrorResponse(HttpServletResponse response, HttpStatus status, String message, HttpServletRequest request) throws IOException {
+        response.setStatus(status.value());
+        response.setContentType("application/json");
+        String jsonResponse = String.format("""
+        {
+            "timestamp": "%s",
+            "status": %d,
+            "error": "%s",
+            "message": "%s",
+            "path": "%s"
+        }
+        """,
+                java.time.Instant.now(),
+                status.value(),
+                status.getReasonPhrase(),
+                message,
+                request.getRequestURI()
+        );
+
+        response.getWriter().write(jsonResponse);
+        response.getWriter().flush();
     }
 }

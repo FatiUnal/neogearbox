@@ -25,13 +25,15 @@ public class PostService {
     private final AdminService adminService;
     private final OrderPostRepository orderPostRepository;
     private final PostBuilder postBuilder;
+    private final CategoryService categoryService;
 
 
-    public PostService(PostRepository postRepository, AdminService adminService, OrderPostRepository orderPostRepository, PostBuilder postBuilder) {
+    public PostService(PostRepository postRepository, AdminService adminService, OrderPostRepository orderPostRepository, PostBuilder postBuilder, CategoryService categoryService) {
         this.postRepository = postRepository;
         this.adminService = adminService;
         this.orderPostRepository = orderPostRepository;
         this.postBuilder = postBuilder;
+        this.categoryService = categoryService;
     }
 
     public List<Post> findAll() {
@@ -44,10 +46,11 @@ public class PostService {
     public Post create(PostRequestDto postRequestDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Admin admin = adminService.getByUsername(authentication.getPrincipal().toString());
+        Category category = categoryService.findById(postRequestDto.getCategoryName());
         PostDetails postDetails;
         if (postRequestDto instanceof KwRequestDto kwRequestDto) {
             postDetails = new KwListing(
-                    kwRequestDto.getCategoryName());
+                    category);
             
         }else
             throw new BadRequestException("Geçersiz veri girişi");
@@ -70,8 +73,7 @@ public class PostService {
         post.setTitleContent(postRequestDto.getTitleContent());
 
         if (postRequestDto instanceof KwRequestDto kwRequestDto) {
-            postDetails = new KwListing(
-                    kwRequestDto.getCategoryName());
+            postDetails.setCategory(categoryService.findById(kwRequestDto.getCategoryName()));
 
         }else
             throw new BadRequestException("Geçersiz veri girişi");
@@ -116,6 +118,8 @@ public class PostService {
 
 
     public void delete(Post post) {
+        post.getPostDetails().setCategory(null);
+        postRepository.save(post);
         postRepository.delete(post);
     }
 
@@ -123,8 +127,8 @@ public class PostService {
         return postRepository.existsById(postId);
     }
 
-    public List<PostSmallDto> getCategoryPosts(String category,int page, int size) {
+    public List<PostSmallDto> getCategoryPosts(int categoryId,int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "title"));
-        return postRepository.findByCategoryName(category,pageable).stream().map(postBuilder::postToPostSmallDto).toList();
+        return postRepository.findByCategoryId(categoryId,pageable).stream().map(postBuilder::postToPostSmallDto).toList();
     }
 }

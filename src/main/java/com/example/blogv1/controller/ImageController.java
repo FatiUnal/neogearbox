@@ -30,6 +30,16 @@ public class ImageController {
         return new ResponseEntity<>(imageService.uploadCoverImage(file,id), HttpStatus.CREATED);
     }
 
+    @PostMapping("/category")
+    public ResponseEntity<String> uploadCategory(@RequestParam("image") MultipartFile file,@RequestParam("id") int id) {
+        return new ResponseEntity<>(imageService.uploadCategory(file,id),HttpStatus.OK);
+    }
+
+    @DeleteMapping("/category")
+    public ResponseEntity<String> deleteCategory(@RequestParam("id") int id) {
+        return new ResponseEntity<>(imageService.deleteCategory(id),HttpStatus.OK);
+    }
+
     @PutMapping("/order-image")
     public ResponseEntity<String> orderPostImage(@RequestParam int postId, List<PostImagerOrderRequestDto> postImagerOrderRequestDtos){
         return new ResponseEntity<>(imageService.orderPostImage(postId,postImagerOrderRequestDtos),HttpStatus.OK);
@@ -55,6 +65,8 @@ public class ImageController {
     public ResponseEntity<String> delete(@RequestParam int postId){
         return new ResponseEntity<>(imageService.delete(postId),HttpStatus.OK);
     }
+
+
 
 
 

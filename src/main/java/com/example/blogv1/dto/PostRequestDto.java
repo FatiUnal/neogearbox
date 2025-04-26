@@ -14,13 +14,13 @@ public class PostRequestDto {
 
     @Column(length = 5000)  // Maksimum 5000 karakter
     private String content;
-    private String categoryName;
+    private int categoryId;
 
-    public PostRequestDto(String title, String titleContent, String content, String categoryName) {
+    public PostRequestDto(String title, String titleContent, String content, int categoryId) {
         this.title = title;
         this.titleContent = titleContent;
         this.content = content;
-        this.categoryName = categoryName;
+        this.categoryId = categoryId;
     }
 
     public String getTitle() {
@@ -47,11 +47,11 @@ public class PostRequestDto {
         this.titleContent = titleContent;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public int getCategoryName() {
+        return categoryId;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setCategoryName(int categoryId) {
+        this.categoryId = categoryId;
     }
 }

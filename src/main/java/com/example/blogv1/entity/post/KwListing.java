@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 @Table(name = "kw")
 public class KwListing extends PostDetails{
 
-    public KwListing(String categoryName) {
-        super(categoryName);
+    public KwListing(Category category) {
+        super(category);
     }
 
     public KwListing() {

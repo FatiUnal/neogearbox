@@ -34,7 +34,7 @@ public class PostBuilder {
                 post.getContent(),
                 coverImage,
                 images,
-                post.getPostDetails().getCategoryName()
+                post.getPostDetails().getCategory().getName()
         );
     }
 }
