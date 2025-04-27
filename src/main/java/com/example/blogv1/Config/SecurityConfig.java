@@ -68,6 +68,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/api/v1/post/status").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/v1/post/estate").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/v1/post/category").permitAll()
+                        .requestMatchers(HttpMethod.GET,"api/v1/post/category/name").permitAll()
 
                         .requestMatchers(HttpMethod.POST,"/api/v1/image").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/v1/image/cover").hasAuthority("ROLE_ADMIN")
@@ -87,6 +88,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/api/v1/category/get-by-id").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/v1/category").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/v1/category").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/v1/category/get-by-link-name").permitAll()
+                        .requestMatchers(HttpMethod.DELETE,"/api/v1/category").hasAuthority("ROLE_ADMIN")
+
 
                         .requestMatchers("/error/**").permitAll()
                         .anyRequest().authenticated())

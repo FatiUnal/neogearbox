@@ -12,4 +12,11 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query("SELECT p FROM Post p WHERE p.postDetails.category.id = :categoryId")
     List<Post> findByCategoryId(@Param("categoryId") int categoryId, Pageable pageable);
+
+    @Query("SELECT p FROM Post p WHERE p.postDetails.category.linkName = :linkName")
+    List<Post> findByCategoryLinkName(@Param("linkName") String linkName, Pageable pageable);
+
+    @Query("SELECT p FROM Post p WHERE p.postDetails.category.id = :categoryId")
+    List<Post> findByCategoryId(@Param("categoryId") int categoryId);
+
 }

@@ -43,4 +43,14 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/get-by-link-name")
+    public ResponseEntity<Category> getCategoryByLinkName(@RequestParam String linkName) {
+        return new ResponseEntity<>(categoryService.findByLinkName(linkName), HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> delete(@RequestParam int id) {
+        return new ResponseEntity<>(categoryService.deleteCategoryById(id), HttpStatus.OK);
+    }
+
 }
