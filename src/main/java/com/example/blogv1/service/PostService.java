@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -129,7 +130,7 @@ public class PostService {
 
     public List<PostSmallDto> getCategoryPosts(int categoryId,int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "title"));
-        if (categoryService.existById(categoryId))
+        if (!categoryService.existById(categoryId))
             throw new NotFoundException("Category Not Found");
         return postRepository.findByCategoryId(categoryId,pageable).stream().map(postBuilder::postToPostSmallDto).toList();
     }
@@ -139,5 +140,12 @@ public class PostService {
         if (!categoryService.existByLinkName(name))
             throw new NotFoundException("Category Not Found");
         return postRepository.findByCategoryLinkName(name,pageable).stream().map(postBuilder::postToPostSmallDto).toList();
+    }
+
+    public  List<PostSmallDto> searchProductsByName(String search){
+        if (search == null || search.isEmpty()){
+            return new ArrayList<>();
+        }
+        return postRepository.findByTitleContainingIgnoreCase(search).stream().map(postBuilder::postToPostSmallDto).toList();
     }
 }

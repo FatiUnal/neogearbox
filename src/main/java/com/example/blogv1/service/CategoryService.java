@@ -64,12 +64,20 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public String deleteCategoryById(int categoryId) {
-        if (!postRepository.findByCategoryId(categoryId).isEmpty())
-            throw new ConflictException("Category has Product, pls delete product!");
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new NotFoundException("Category not found"));
+    public String deleteCategoryById(Category category) {
         categoryRepository.delete(category);
         return "success";
+    }
+
+    public boolean hasPostByCategoryId(int categoryId) {
+        if (postRepository.findByCategoryId(categoryId).isEmpty())
+            return false;
+        else
+            return true;
+    }
+
+    public boolean hasCategoryById(int categoryId) {
+        return categoryRepository.existsById(categoryId);
     }
 
     @PostConstruct

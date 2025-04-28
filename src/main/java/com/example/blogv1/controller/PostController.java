@@ -75,4 +75,9 @@ public class PostController {
         return new ResponseEntity<>(postService.getCategoryByNamePosts(linkName,page,size),HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<PostSmallDto>> searchPost(@RequestParam String title){
+        return new ResponseEntity<>(postService.searchProductsByName(title),HttpStatus.OK);
+    }
+
 }

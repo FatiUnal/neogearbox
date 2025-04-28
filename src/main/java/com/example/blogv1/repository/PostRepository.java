@@ -19,4 +19,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query("SELECT p FROM Post p WHERE p.postDetails.category.id = :categoryId")
     List<Post> findByCategoryId(@Param("categoryId") int categoryId);
 
+    List<Post> findByTitleContainingIgnoreCase(String title);
+
 }
