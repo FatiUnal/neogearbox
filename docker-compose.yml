@@ -1,33 +1,33 @@
 services:
-  kw:
+  cafe17:
     build:
       context: .
-    container_name: kw
+    container_name: cafe17
     depends_on:
-      - kwdatabase
+      - cafe17database
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://kwdatabase:5432/kw
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://cafe17database:5432/cafe17
     ports:
-      - "8082:8082"
+      - "8084:8084"
     volumes:
       - /var/www/upload:/var/www/upload
     networks:
       - mynetwork
 
-  kwdatabase:
+  cafe17database:
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
       timeout: 5s
       retries: 5
     image: postgres
-    container_name: kwdatabase
+    container_name: cafe17database
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=kw
+      - POSTGRES_DB=cafe17
     ports:
       - "5432:5432"
     volumes:

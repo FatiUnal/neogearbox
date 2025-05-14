@@ -24,10 +24,6 @@ public class Post {
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
     private List<Image> images;
 
-    @ManyToOne
-    @JoinColumn(name = "admin_id", nullable = false)
-    @JsonIgnore
-    private Admin admin;
     private LocalDateTime createdAt;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)  // orphanRemoval, bağlı olmayan detayları siler
@@ -38,11 +34,10 @@ public class Post {
     public Post() {
         this.createdAt = LocalDateTime.now();
     }
-    public Post(String title, String titleContent, String content, Admin admin, PostDetails postDetails) {
+    public Post(String title, String titleContent, String content, PostDetails postDetails) {
         this.title = title;
         this.titleContent = titleContent;
         this.content = content;
-        this.admin = admin;
         this.postDetails = postDetails;
         this.createdAt = LocalDateTime.now();
     }
@@ -73,14 +68,6 @@ public class Post {
 
     public void setImages(List<Image> images) {
         this.images = images;
-    }
-
-    public Admin getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
     }
 
     public LocalDateTime getCreatedAt() {

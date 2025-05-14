@@ -45,11 +45,9 @@ public class PostService {
     }
 
     public Post create(PostRequestDto postRequestDto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Admin admin = adminService.getByUsername(authentication.getPrincipal().toString());
         Category category = categoryService.findById(postRequestDto.getCategoryName());
         PostDetails postDetails;
-        if (postRequestDto instanceof KwRequestDto kwRequestDto) {
+        if (postRequestDto instanceof KwRequestDto) {
             postDetails = new KwListing(
                     category);
             
@@ -60,7 +58,6 @@ public class PostService {
                 postRequestDto.getTitle(),
                 postRequestDto.getTitleContent(),
                 postRequestDto.getContent(),
-                admin,
                 postDetails
         );
         return postRepository.save(post);

@@ -18,8 +18,6 @@ public class Admin {
     private String username;
     private String password;
     private LocalDateTime created;
-    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> posts = new ArrayList<>();
 
 
     public Admin() {
@@ -77,11 +75,4 @@ public class Admin {
         return created;
     }
 
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
 }
