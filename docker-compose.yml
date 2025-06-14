@@ -1,33 +1,33 @@
 services:
-  cafe17:
+  detaypeyzaj:
     build:
       context: .
-    container_name: cafe17
+    container_name: detaypeyzaj
     depends_on:
-      - cafe17database
+      - detaypeyzajdatabase
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://cafe17database:5432/cafe17
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://detaypeyzajdatabase:5432/detaypeyzaj
     ports:
-      - "8084:8084"
+      - "8086:8086"
     volumes:
       - /var/www/upload:/var/www/upload
     networks:
       - mynetwork
 
-  cafe17database:
+  detaypeyzajdatabase:
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
       timeout: 5s
       retries: 5
     image: postgres
-    container_name: cafe17database
+    container_name: detaypeyzajdatabase
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=cafe17
+      - POSTGRES_DB=detaypeyzaj
     ports:
       - "5432:5432"
     volumes:
