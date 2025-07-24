@@ -10,6 +10,7 @@ import com.example.blogv1.exception.ConflictException;
 import com.example.blogv1.exception.NotFoundException;
 import com.example.blogv1.repository.ImageRepository;
 import jakarta.transaction.Transactional;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -87,8 +88,25 @@ public class ImageService {
 
                 String urls = url+"api/v1/upload/neogearbox/images/"+id+"/"+newFileName;
 
+
+                File outputFile = filePath.toFile();
+
+                // İçerik türünü kontrol et
+                String contentType = file.getContentType();
+                if (contentType != null && contentType.startsWith("image/")) {
+                    // Resimse: boyutlandır ve kaydet
+                    Thumbnails.of(file.getInputStream())
+                            .size(800, 800)
+                            .outputQuality(0.9)
+                            .outputFormat(fileExtension)
+                            .keepAspectRatio(true)
+                            .toFile(outputFile);
+                } else {
+                    // Resim değilse: direkt kaydet
+                    file.transferTo(outputFile);
+                }
+
                 Image image = new Image(urls,post, ImageType.IMAGE);
-                file.transferTo(filePath.toFile());
 
                 post.getImages().add(image);
                 uploadFilesName.add(urls);
@@ -135,7 +153,24 @@ public class ImageService {
 
             Path filePath = path.resolve(newFileName);
 
-            file.transferTo(filePath.toFile());
+            File outputFile = filePath.toFile();
+
+            // İçerik türünü kontrol et
+            String contentType = file.getContentType();
+            if (contentType != null && contentType.startsWith("image/")) {
+                // Resimse: boyutlandır ve kaydet
+                Thumbnails.of(file.getInputStream())
+                        .size(800, 800)
+                        .outputQuality(0.9)
+                        .outputFormat(fileExtension)
+                        .keepAspectRatio(true)
+                        .toFile(outputFile);
+            } else {
+                // Resim değilse: direkt kaydet
+                file.transferTo(outputFile);
+            }
+
+
             Image image = new Image(urls,ImageType.COVER);
             post.setCoverImage(image);
             postService.savePost(post);
@@ -176,13 +211,13 @@ public class ImageService {
             String newFileName = UUID.randomUUID().toString() + fileExtension;
 
 
-            String urls = url+"api/v1/upload/neogearbox/cover/"+id+"/"+newFileName;
+            String urls = url+"api/v1/upload/neogearbox/pdf/"+id+"/"+newFileName;
 
             Path filePath = path.resolve(newFileName);
 
             file.transferTo(filePath.toFile());
             Image image = new Image(urls,ImageType.PDF);
-            post.setCoverImage(image);
+            post.setPdf(image);
             postService.savePost(post);
 
             return urls;
