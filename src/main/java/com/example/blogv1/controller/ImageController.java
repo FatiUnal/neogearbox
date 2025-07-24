@@ -30,6 +30,11 @@ public class ImageController {
         return new ResponseEntity<>(imageService.uploadCoverImage(file,id), HttpStatus.CREATED);
     }
 
+    @PostMapping("/pdf")
+    public ResponseEntity<String> uploadPdf(@RequestParam("image") MultipartFile file,@RequestParam("id") int id) {
+        return new ResponseEntity<>(imageService.uploadPdf(file,id), HttpStatus.CREATED);
+    }
+
     @PostMapping("/category")
     public ResponseEntity<String> uploadCategory(@RequestParam("image") MultipartFile file,@RequestParam("id") int id) {
         return new ResponseEntity<>(imageService.uploadCategory(file,id),HttpStatus.OK);
@@ -56,6 +61,11 @@ public class ImageController {
         return new ResponseEntity<>(imageService.deleteCoverImage(postId), HttpStatus.OK);
     }
 
+    @DeleteMapping("/pdf-delete")
+    public ResponseEntity<String> deletePdf(@RequestParam int postId) {
+        return new ResponseEntity<>(imageService.deletePdf(postId), HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete-by-id")
     public ResponseEntity<List<String>> deleteImageById(@RequestParam Integer postId,@RequestParam List<Integer> imagesId) {
         return new ResponseEntity<>(imageService.deleteImageById(postId,imagesId),HttpStatus.OK);
@@ -65,6 +75,7 @@ public class ImageController {
     public ResponseEntity<String> delete(@RequestParam int postId){
         return new ResponseEntity<>(imageService.delete(postId),HttpStatus.OK);
     }
+
 
 
 

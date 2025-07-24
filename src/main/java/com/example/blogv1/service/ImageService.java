@@ -9,7 +9,6 @@ import com.example.blogv1.exception.BadRequestException;
 import com.example.blogv1.exception.ConflictException;
 import com.example.blogv1.exception.NotFoundException;
 import com.example.blogv1.repository.ImageRepository;
-import com.example.blogv1.repository.PostRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -86,7 +85,7 @@ public class ImageService {
                     throw new RuntimeException("A file with the name '" + originalFileName + "' already exists.");
                 }
 
-                String urls = url+"api/v1/upload/detaypeyzaj/images/"+id+"/"+newFileName;
+                String urls = url+"api/v1/upload/neogearbox/images/"+id+"/"+newFileName;
 
                 Image image = new Image(urls,post, ImageType.IMAGE);
                 file.transferTo(filePath.toFile());
@@ -132,12 +131,57 @@ public class ImageService {
             String newFileName = UUID.randomUUID().toString() + fileExtension;
 
 
-            String urls = url+"api/v1/upload/detaypeyzaj/cover/"+id+"/"+newFileName;
+            String urls = url+"api/v1/upload/neogearbox/cover/"+id+"/"+newFileName;
 
             Path filePath = path.resolve(newFileName);
 
             file.transferTo(filePath.toFile());
             Image image = new Image(urls,ImageType.COVER);
+            post.setCoverImage(image);
+            postService.savePost(post);
+
+            return urls;
+        } catch (IOException e) {
+            throw new RuntimeException("File upload failed for post ID: " + id, e);
+        }
+    }
+
+    public String uploadPdf(MultipartFile file, int id) {
+
+        Post post = postService.getById(id);
+        System.out.println("uploadPdf");
+
+        if (post.getPdf() != null) {
+            deletePdf(id);
+        }
+
+        try {
+            Path path = Paths.get(uploadDir+"pdf/"+id+"/");
+            if (!Files.exists(path)) {
+                Files.createDirectories(path);
+            }
+
+            String originalFileName = file.getOriginalFilename();
+            if (originalFileName == null || originalFileName.isEmpty()) {
+                throw new RuntimeException("File name is invalid");
+            }
+
+            String fileExtension = "";
+            int lastIndexOfDot = originalFileName.lastIndexOf(".");
+            if (lastIndexOfDot != -1) {
+                fileExtension = originalFileName.substring(lastIndexOfDot); // Örneğin ".jpg"
+            }
+
+            // Benzersiz dosya adı oluştur
+            String newFileName = UUID.randomUUID().toString() + fileExtension;
+
+
+            String urls = url+"api/v1/upload/neogearbox/cover/"+id+"/"+newFileName;
+
+            Path filePath = path.resolve(newFileName);
+
+            file.transferTo(filePath.toFile());
+            Image image = new Image(urls,ImageType.PDF);
             post.setCoverImage(image);
             postService.savePost(post);
 
@@ -177,7 +221,7 @@ public class ImageService {
             String newFileName = UUID.randomUUID().toString() + fileExtension;
 
 
-            String urls = url+"api/v1/upload/detaypeyzaj/category/"+id+"/"+newFileName;
+            String urls = url+"api/v1/upload/neogearbox/category/"+id+"/"+newFileName;
 
             Path filePath = path.resolve(newFileName);
             file.transferTo(filePath.toFile());
@@ -227,6 +271,29 @@ public class ImageService {
             if (file.delete()) { // Dosya silinir.
                 int id = post.getCoverImage().getId();
                 post.setCoverImage(null);
+                postService.savePost(post);
+                imageRepository.deleteById(id);
+                return "File deleted successfully";
+            } else {
+                throw new RuntimeException("Failed to delete file: " + path);
+            }
+        }else
+            throw new ConflictException("Image not found");
+    }
+
+    @Transactional
+    public String deletePdf(int postId) {
+        Post post = postService.getById(postId);
+        if (post.getPdf() != null) {
+            String pdf = post.getPdf().getFilename();
+            String path = pdf.replace(urlFile,uploadDir);
+            //url file :http://localhost:8081/api/v1/upload/  upload dir:/var/www/upload/bake/
+            System.out.println("path:          "+path);
+            //http://localhost:8081/api/v1/upload/bake/images/1/91eaf823-795a-4510-83e9-1954d022035d.jpeg
+            File file = new File(path);
+            if (file.delete()) { // Dosya silinir.
+                int id = post.getPdf().getId();
+                post.setPdf(null);
                 postService.savePost(post);
                 imageRepository.deleteById(id);
                 return "File deleted successfully";

@@ -24,6 +24,9 @@ public class Post {
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
     private List<Image> images;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image pdf;
+
     private LocalDateTime createdAt;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)  // orphanRemoval, bağlı olmayan detayları siler
@@ -96,5 +99,13 @@ public class Post {
 
     public void setTitleContent(String titleContent) {
         this.titleContent = titleContent;
+    }
+
+    public Image getPdf() {
+        return pdf;
+    }
+
+    public void setPdf(Image pdf) {
+        this.pdf = pdf;
     }
 }
