@@ -59,60 +59,52 @@ public class ImageService {
 
         List<String> uploadFilesName = new ArrayList<>();
         try {
-            Path path = Paths.get(uploadDir+"images/"+id+"/");
+            Path path = Paths.get(uploadDir + "images/" + id + "/");
             if (!Files.exists(path)) {
                 Files.createDirectories(path);
             }
 
             for (MultipartFile file : files) {
-
                 String originalFileName = file.getOriginalFilename();
                 if (originalFileName == null || originalFileName.isEmpty()) {
                     throw new RuntimeException("File name is invalid");
                 }
 
                 String fileExtension = "";
+                String formatName = "";
                 int lastIndexOfDot = originalFileName.lastIndexOf(".");
                 if (lastIndexOfDot != -1) {
-                    fileExtension = originalFileName.substring(lastIndexOfDot); // Örneğin ".jpg"
+                    fileExtension = originalFileName.substring(lastIndexOfDot);      // e.g. ".jpg"
+                    formatName = originalFileName.substring(lastIndexOfDot + 1);     // e.g. "jpg"
                 }
 
                 String newFileName = UUID.randomUUID().toString() + fileExtension;
-
                 Path filePath = path.resolve(newFileName);
-
-                // Aynı isimde bir dosya var mı kontrol et
                 if (Files.exists(filePath)) {
                     throw new RuntimeException("A file with the name '" + originalFileName + "' already exists.");
                 }
 
-                String urls = url+"api/v1/upload/neogearbox/images/"+id+"/"+newFileName;
-
-
+                String urls = url + "api/v1/upload/neogearbox/images/" + id + "/" + newFileName;
                 File outputFile = filePath.toFile();
 
-                // İçerik türünü kontrol et
                 String contentType = file.getContentType();
                 if (contentType != null && contentType.startsWith("image/")) {
-                    // Resimse: boyutlandır ve kaydet
                     Thumbnails.of(file.getInputStream())
                             .size(800, 800)
                             .outputQuality(0.9)
-                            .outputFormat(fileExtension)
+                            .outputFormat(formatName) // Nokta olmadan
                             .keepAspectRatio(true)
                             .toFile(outputFile);
                 } else {
-                    // Resim değilse: direkt kaydet
                     file.transferTo(outputFile);
                 }
 
-                Image image = new Image(urls,post, ImageType.IMAGE);
-
+                Image image = new Image(urls, post, ImageType.IMAGE);
                 post.getImages().add(image);
                 uploadFilesName.add(urls);
             }
-            postService.savePost(post);
 
+            postService.savePost(post);
         } catch (IOException e) {
             throw new ConflictException("image not added");
         }
@@ -120,7 +112,6 @@ public class ImageService {
     }
 
     public String uploadCoverImage(MultipartFile file, int id) {
-
         Post post = postService.getById(id);
         System.out.println("uploadCoverImage");
 
@@ -129,7 +120,7 @@ public class ImageService {
         }
 
         try {
-            Path path = Paths.get(uploadDir+"cover/"+id+"/");
+            Path path = Paths.get(uploadDir + "cover/" + id + "/");
             if (!Files.exists(path)) {
                 Files.createDirectories(path);
             }
@@ -140,38 +131,32 @@ public class ImageService {
             }
 
             String fileExtension = "";
+            String formatName = "";
             int lastIndexOfDot = originalFileName.lastIndexOf(".");
             if (lastIndexOfDot != -1) {
-                fileExtension = originalFileName.substring(lastIndexOfDot); // Örneğin ".jpg"
+                fileExtension = originalFileName.substring(lastIndexOfDot);      // ".png"
+                formatName = originalFileName.substring(lastIndexOfDot + 1);     // "png"
             }
 
-            // Benzersiz dosya adı oluştur
             String newFileName = UUID.randomUUID().toString() + fileExtension;
-
-
-            String urls = url+"api/v1/upload/neogearbox/cover/"+id+"/"+newFileName;
+            String urls = url + "api/v1/upload/neogearbox/cover/" + id + "/" + newFileName;
 
             Path filePath = path.resolve(newFileName);
-
             File outputFile = filePath.toFile();
 
-            // İçerik türünü kontrol et
             String contentType = file.getContentType();
             if (contentType != null && contentType.startsWith("image/")) {
-                // Resimse: boyutlandır ve kaydet
                 Thumbnails.of(file.getInputStream())
                         .size(800, 800)
                         .outputQuality(0.9)
-                        .outputFormat(fileExtension)
+                        .outputFormat(formatName) // Nokta olmadan
                         .keepAspectRatio(true)
                         .toFile(outputFile);
             } else {
-                // Resim değilse: direkt kaydet
                 file.transferTo(outputFile);
             }
 
-
-            Image image = new Image(urls,ImageType.COVER);
+            Image image = new Image(urls, ImageType.COVER);
             post.setCoverImage(image);
             postService.savePost(post);
 
