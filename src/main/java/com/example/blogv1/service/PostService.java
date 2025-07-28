@@ -56,8 +56,11 @@ public class PostService {
 
         Post post = new Post(
                 postRequestDto.getTitle(),
+                postRequestDto.getTitleEn(),
                 postRequestDto.getTitleContent(),
+                postRequestDto.getTitleContentEn(),
                 postRequestDto.getContent(),
+                postRequestDto.getContentEn(),
                 postDetails
         );
         return postRepository.save(post);
@@ -67,8 +70,11 @@ public class PostService {
         Post post = getById(id);
         PostDetails postDetails = post.getPostDetails();
         post.setTitle(postRequestDto.getTitle());
+        post.setTitleEn(postRequestDto.getTitleEn());
         post.setContent(postRequestDto.getContent());
+        post.setContentEn(postRequestDto.getContentEn());
         post.setTitleContent(postRequestDto.getTitleContent());
+        post.setTitleContentEn(postRequestDto.getTitleContentEn());
 
         if (postRequestDto instanceof KwRequestDto kwRequestDto) {
             postDetails.setCategory(categoryService.findById(kwRequestDto.getCategoryName()));

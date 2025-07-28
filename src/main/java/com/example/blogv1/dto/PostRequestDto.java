@@ -10,16 +10,22 @@ import jakarta.persistence.Column;
 })
 public class PostRequestDto {
     private String title;
+    private String titleEn;
     private String titleContent;
+    private String titleContentEn;
 
     @Column(length = 5000)  // Maksimum 5000 karakter
     private String content;
+    private String contentEn;
     private int categoryId;
 
-    public PostRequestDto(String title, String titleContent, String content, int categoryId) {
+    public PostRequestDto(String title, String titleEn, String titleContent, String titleContentEn, String content, String contentEn, int categoryId) {
         this.title = title;
+        this.titleEn = titleEn;
         this.titleContent = titleContent;
+        this.titleContentEn = titleContentEn;
         this.content = content;
+        this.contentEn = contentEn;
         this.categoryId = categoryId;
     }
 
@@ -53,5 +59,29 @@ public class PostRequestDto {
 
     public void setCategoryName(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getTitleEn() {
+        return titleEn;
+    }
+
+    public void setTitleEn(String titleEn) {
+        this.titleEn = titleEn;
+    }
+
+    public String getTitleContentEn() {
+        return titleContentEn;
+    }
+
+    public void setTitleContentEn(String titleContentEn) {
+        this.titleContentEn = titleContentEn;
+    }
+
+    public String getContentEn() {
+        return contentEn;
+    }
+
+    public void setContentEn(String contentEn) {
+        this.contentEn = contentEn;
     }
 }

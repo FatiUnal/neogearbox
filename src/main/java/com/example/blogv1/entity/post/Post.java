@@ -14,9 +14,12 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
+    private String titleEn;
     private String titleContent;
+    private String titleContentEn;
     @Column(length = 5000)  // Maksimum 5000 karakter
     private String content;
+    private String contentEn;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_id", referencedColumnName = "id")
     private Image coverImage;
@@ -37,10 +40,13 @@ public class Post {
     public Post() {
         this.createdAt = LocalDateTime.now();
     }
-    public Post(String title, String titleContent, String content, PostDetails postDetails) {
+    public Post(String title, String titleEn, String titleContent, String titleContentEn, String content, String contentEn, PostDetails postDetails) {
         this.title = title;
+        this.titleEn = titleEn;
         this.titleContent = titleContent;
+        this.titleContentEn = titleContentEn;
         this.content = content;
+        this.contentEn = contentEn;
         this.postDetails = postDetails;
         this.createdAt = LocalDateTime.now();
     }
@@ -107,5 +113,29 @@ public class Post {
 
     public void setPdf(Image pdf) {
         this.pdf = pdf;
+    }
+
+    public String getTitleEn() {
+        return titleEn;
+    }
+
+    public void setTitleEn(String titleEn) {
+        this.titleEn = titleEn;
+    }
+
+    public String getTitleContentEn() {
+        return titleContentEn;
+    }
+
+    public void setTitleContentEn(String titleContentEn) {
+        this.titleContentEn = titleContentEn;
+    }
+
+    public String getContentEn() {
+        return contentEn;
+    }
+
+    public void setContentEn(String contentEn) {
+        this.contentEn = contentEn;
     }
 }

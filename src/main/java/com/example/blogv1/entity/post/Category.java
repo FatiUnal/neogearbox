@@ -14,6 +14,7 @@ public class Category {
     private int id;
 
     private String name;
+    private String nameEn;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_id", referencedColumnName = "id")
@@ -21,8 +22,9 @@ public class Category {
 
     private String linkName;
 
-    public Category(String name) {
+    public Category(String name, String nameEn) {
         this.name = name;
+        this.nameEn = nameEn;
     }
 
     public Category() {
@@ -76,5 +78,13 @@ public class Category {
 
     public void setLinkName(String linkName) {
         this.linkName = linkName;
+    }
+
+    public String getNameEn() {
+        return nameEn;
+    }
+
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
     }
 }
