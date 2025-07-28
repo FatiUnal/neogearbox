@@ -10,22 +10,22 @@ import jakarta.persistence.Column;
 })
 public class PostRequestDto {
     private String title;
-    private String titleEn;
+    private String titleEng;
     private String titleContent;
-    private String titleContentEn;
+    private String titleContentEng;
 
     @Column(length = 5000)  // Maksimum 5000 karakter
     private String content;
-    private String contentEn;
+    private String contentEng;
     private int categoryId;
 
-    public PostRequestDto(String title, String titleEn, String titleContent, String titleContentEn, String content, String contentEn, int categoryId) {
+    public PostRequestDto(String title, String titleEng, String titleContent, String titleContentEng, String content, String contentEng, int categoryId) {
         this.title = title;
-        this.titleEn = titleEn;
+        this.titleEng = titleEng;
         this.titleContent = titleContent;
-        this.titleContentEn = titleContentEn;
+        this.titleContentEng = titleContentEng;
         this.content = content;
-        this.contentEn = contentEn;
+        this.contentEng = contentEng;
         this.categoryId = categoryId;
     }
 
@@ -61,27 +61,27 @@ public class PostRequestDto {
         this.categoryId = categoryId;
     }
 
-    public String getTitleEn() {
-        return titleEn;
+    public String getTitleEng() {
+        return titleEng;
     }
 
-    public void setTitleEn(String titleEn) {
-        this.titleEn = titleEn;
+    public void setTitleEng(String titleEng) {
+        this.titleEng = titleEng;
     }
 
-    public String getTitleContentEn() {
-        return titleContentEn;
+    public String getTitleContentEng() {
+        return titleContentEng;
     }
 
-    public void setTitleContentEn(String titleContentEn) {
-        this.titleContentEn = titleContentEn;
+    public void setTitleContentEng(String titleContentEng) {
+        this.titleContentEng = titleContentEng;
     }
 
-    public String getContentEn() {
-        return contentEn;
+    public String getContentEng() {
+        return contentEng;
     }
 
-    public void setContentEn(String contentEn) {
-        this.contentEn = contentEn;
+    public void setContentEng(String contentEng) {
+        this.contentEng = contentEng;
     }
 }

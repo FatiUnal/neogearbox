@@ -30,11 +30,11 @@ public class PostBuilder {
         return new PostSmallDto(
                 post.getId(),
                 post.getTitle(),
-                post.getTitleEn() != null ? post.getTitleEn() : null,
+                post.getTitleEng() != null ? post.getTitleEng() : null,
                 post.getTitleContent(),
-                post.getTitleContentEn() != null ? post.getTitleContentEn() : null,
+                post.getTitleContentEng() != null ? post.getTitleContentEng() : null,
                 post.getContent(),
-                post.getContentEn() != null ? post.getContentEn() : null,
+                post.getContentEng() != null ? post.getContentEng() : null,
                 coverImage,
                 images,
                 post.getPostDetails().getCategory().getName()

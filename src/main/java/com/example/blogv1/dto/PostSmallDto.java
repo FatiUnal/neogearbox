@@ -5,24 +5,24 @@ import java.util.List;
 public class PostSmallDto {
     private int id;
     private String title;
-    private String titleEn;
+    private String titleEng;
     private String titleContent;
-    private String titleContentEn;
+    private String titleContentEng;
     private String content;
-    private String contentEn;
+    private String contentEng;
     private String coverImage;
     private List<String> images;
     private String categoryName;
 
 
-    public PostSmallDto(int id, String title, String titleEn, String titleContent, String titleContentEn, String content, String contentEn, String coverImage, List<String> images, String categoryName) {
+    public PostSmallDto(int id, String title, String titleEng, String titleContent, String titleContentEng, String content, String contentEng, String coverImage, List<String> images, String categoryName) {
         this.id = id;
         this.title = title;
-        this.titleEn = titleEn;
+        this.titleEng = titleEng;
         this.titleContent = titleContent;
-        this.titleContentEn = titleContentEn;
+        this.titleContentEng = titleContentEng;
         this.content = content;
-        this.contentEn = contentEn;
+        this.contentEng = contentEng;
         this.coverImage = coverImage;
         this.images = images;
         this.categoryName = categoryName;
@@ -80,27 +80,27 @@ public class PostSmallDto {
         this.categoryName = categoryName;
     }
 
-    public String getTitleEn() {
-        return titleEn;
+    public String getTitleEng() {
+        return titleEng;
     }
 
-    public void setTitleEn(String titleEn) {
-        this.titleEn = titleEn;
+    public void setTitleEng(String titleEng) {
+        this.titleEng = titleEng;
     }
 
-    public String getTitleContentEn() {
-        return titleContentEn;
+    public String getTitleContentEng() {
+        return titleContentEng;
     }
 
-    public void setTitleContentEn(String titleContentEn) {
-        this.titleContentEn = titleContentEn;
+    public void setTitleContentEng(String titleContentEng) {
+        this.titleContentEng = titleContentEng;
     }
 
-    public String getContentEn() {
-        return contentEn;
+    public String getContentEng() {
+        return contentEng;
     }
 
-    public void setContentEn(String contentEn) {
-        this.contentEn = contentEn;
+    public void setContentEng(String contentEng) {
+        this.contentEng = contentEng;
     }
 }
