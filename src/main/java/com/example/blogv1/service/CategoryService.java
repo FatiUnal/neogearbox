@@ -26,12 +26,11 @@ public class CategoryService {
     public Category create(CategoryRequestDto categoryRequestDto){
 
         Category category = new Category(categoryRequestDto.getCategoryName(),categoryRequestDto.getCategoryNameEng());
-        if (!category.getName().equals(categoryRequestDto.getCategoryNameEng())){
 
-            if (categoryRepository.existsByName(categoryRequestDto.getCategoryName()))
-                throw new ConflictException("Category name already exists");
+        if (categoryRepository.existsByName(categoryRequestDto.getCategoryName()))
+            throw new ConflictException("Category name already exists");
 
-        }
+
         if (categoryRepository.existsByName(categoryRequestDto.getCategoryName()))
             throw new ConflictException("Category name already exists");
 
@@ -42,15 +41,24 @@ public class CategoryService {
     }
 
     public Category update(Integer id, CategoryRequestDto categoryRequestDto){
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException("Category not found"));
+
         if (categoryRequestDto.getCategoryName().isEmpty())
             throw new BadRequestException("Category name is empty");
 
-        if (categoryRepository.existsByName(categoryRequestDto.getCategoryName()))
-            throw new ConflictException("Category name already exists");
+        if (!category.getName().equals(categoryRequestDto.getCategoryName())){
+            if (categoryRepository.existsByName(categoryRequestDto.getCategoryName())){
+                throw new ConflictException("Category name already exists");
+            }else
+                category.setName(categoryRequestDto.getCategoryName());
+        }
 
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException("Category not found"));
-        category.setName(categoryRequestDto.getCategoryName());
-        category.setNameEng(categoryRequestDto.getCategoryNameEng());
+        if (!category.getNameEng().equals(categoryRequestDto.getCategoryNameEng())){
+            if (categoryRepository.existsByNameEng(categoryRequestDto.getCategoryNameEng())){
+                throw new ConflictException("Category nameEng already exists");
+            }else
+                category.setNameEng(categoryRequestDto.getCategoryNameEng());
+        }
 
         return categoryRepository.save(category);
     }

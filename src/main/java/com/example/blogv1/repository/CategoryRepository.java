@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category,Integer> {
     boolean existsByName(String name);
+
+    boolean existsByNameEng(String nameEng);
     boolean existsByLinkName(String linkName);
 
     List<Category> findByLinkNameIsNull();
