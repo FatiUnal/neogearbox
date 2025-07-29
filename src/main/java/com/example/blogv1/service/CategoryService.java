@@ -24,13 +24,20 @@ public class CategoryService {
     }
 
     public Category create(CategoryRequestDto categoryRequestDto){
+
+        Category category = new Category(categoryRequestDto.getCategoryName(),categoryRequestDto.getCategoryNameEng());
+        if (!category.getName().equals(categoryRequestDto.getCategoryNameEng())){
+
+            if (categoryRepository.existsByName(categoryRequestDto.getCategoryName()))
+                throw new ConflictException("Category name already exists");
+
+        }
         if (categoryRepository.existsByName(categoryRequestDto.getCategoryName()))
             throw new ConflictException("Category name already exists");
 
         if (categoryRequestDto.getCategoryName().isEmpty())
             throw new BadRequestException("Category name is empty");
 
-        Category category = new Category(categoryRequestDto.getCategoryName(),categoryRequestDto.getCategoryNameEng());
         return categoryRepository.save(category);
     }
 
