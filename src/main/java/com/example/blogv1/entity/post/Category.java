@@ -33,8 +33,8 @@ public class Category {
     @PrePersist
     @PreUpdate
     public void generateProductData() {
-        if (name != null) {
-            String processedName = name.trim().toLowerCase();
+        if (nameEng != null) {
+            String processedName = nameEng.trim().toLowerCase();
 
             processedName = processedName
                     .replace("ç", "c")
