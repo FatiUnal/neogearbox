@@ -2,11 +2,11 @@ package com.example.blogv1.dto;
 
 public class CategoryRequestDto {
     private String categoryName;
-    private String categoryNameEn;
+    private String categoryNameEng;
 
-    public CategoryRequestDto(String categoryName, String categoryNameEn) {
+    public CategoryRequestDto(String categoryName, String categoryNameEng) {
         this.categoryName = categoryName;
-        this.categoryNameEn = categoryNameEn;
+        this.categoryNameEng = categoryNameEng;
     }
 
     public String getCategoryName() {
@@ -17,11 +17,11 @@ public class CategoryRequestDto {
         this.categoryName = categoryName;
     }
 
-    public String getCategoryNameEn() {
-        return categoryNameEn;
+    public String getCategoryNameEng() {
+        return categoryNameEng;
     }
 
-    public void setCategoryNameEn(String categoryNameEn) {
-        this.categoryNameEn = categoryNameEn;
+    public void setCategoryNameEng(String categoryNameEng) {
+        this.categoryNameEng = categoryNameEng;
     }
 }

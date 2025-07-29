@@ -30,7 +30,7 @@ public class CategoryService {
         if (categoryRequestDto.getCategoryName().isEmpty())
             throw new BadRequestException("Category name is empty");
 
-        Category category = new Category(categoryRequestDto.getCategoryName(),categoryRequestDto.getCategoryNameEn());
+        Category category = new Category(categoryRequestDto.getCategoryName(),categoryRequestDto.getCategoryNameEng());
         return categoryRepository.save(category);
     }
 
@@ -43,7 +43,7 @@ public class CategoryService {
 
         Category category = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException("Category not found"));
         category.setName(categoryRequestDto.getCategoryName());
-        category.setNameEn(categoryRequestDto.getCategoryNameEn());
+        category.setNameEng(categoryRequestDto.getCategoryNameEng());
 
         return categoryRepository.save(category);
     }

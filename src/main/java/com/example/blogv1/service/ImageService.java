@@ -231,9 +231,12 @@ public class ImageService {
             }
 
             String fileExtension = "";
+            String formatName = "";
+
             int lastIndexOfDot = originalFileName.lastIndexOf(".");
             if (lastIndexOfDot != -1) {
                 fileExtension = originalFileName.substring(lastIndexOfDot); // Örneğin ".jpg"
+                formatName = originalFileName.substring(lastIndexOfDot + 1);     // e.g. "jpg"
             }
 
 
@@ -242,9 +245,21 @@ public class ImageService {
 
 
             String urls = url+"api/v1/upload/neogearbox/category/"+id+"/"+newFileName;
-
             Path filePath = path.resolve(newFileName);
-            file.transferTo(filePath.toFile());
+            File outputFile = filePath.toFile();
+
+            String contentType = file.getContentType();
+            if (contentType != null && contentType.startsWith("image/")) {
+                Thumbnails.of(file.getInputStream())
+                        .size(800, 800)
+                        .outputQuality(0.9)
+                        .outputFormat(formatName) // Nokta olmadan
+                        .keepAspectRatio(true)
+                        .toFile(outputFile);
+            } else {
+                file.transferTo(outputFile);
+            }
+
             Image image = new Image(urls,ImageType.CATEGORY);
             category.setCoverImage(image);
             categoryService.saveCategory(category);
