@@ -151,4 +151,11 @@ public class PostService {
         }
         return postRepository.findByTitleContainingIgnoreCase(search).stream().map(postBuilder::postToPostSmallDto).toList();
     }
+
+    public List<PostSmallDto> searchProductsByNameEng(String titleEng) {
+        if (titleEng == null || titleEng.isEmpty()){
+            return new ArrayList<>();
+        }
+        return postRepository.findByTitleEngContainingIgnoreCase(titleEng).stream().map(postBuilder::postToPostSmallDto).toList();
+    }
 }

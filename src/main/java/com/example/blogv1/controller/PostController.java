@@ -79,5 +79,9 @@ public class PostController {
     public ResponseEntity<List<PostSmallDto>> searchPost(@RequestParam String title){
         return new ResponseEntity<>(postService.searchProductsByName(title),HttpStatus.OK);
     }
+    @GetMapping("/searcheng")
+    public ResponseEntity<List<PostSmallDto>> searchPostEng(@RequestParam String titleEng){
+        return new ResponseEntity<>(postService.searchProductsByNameEng(titleEng),HttpStatus.OK);
+    }
 
 }

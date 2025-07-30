@@ -20,5 +20,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findByCategoryId(@Param("categoryId") int categoryId);
 
     List<Post> findByTitleContainingIgnoreCase(String title);
+    List<Post> findByTitleEngContainingIgnoreCase(String titleEng);
 
 }
