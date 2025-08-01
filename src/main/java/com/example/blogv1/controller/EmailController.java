@@ -24,7 +24,7 @@ public class EmailController {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("neogearbox@gmail.com");
-        message.setTo("neogearbox@gmail.com");
+        message.setTo("info@neogearbox.com");
         message.setSubject(request.getSubject());
 
         String fullMessage = String.format(
