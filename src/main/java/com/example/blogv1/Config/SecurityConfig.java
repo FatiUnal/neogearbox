@@ -94,6 +94,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/api/v1/category/get-by-link-name").permitAll()
                         .requestMatchers(HttpMethod.DELETE,"/api/v1/category").hasAuthority("ROLE_ADMIN")
 
+                        .requestMatchers(HttpMethod.POST,"/api/v1/email").permitAll()
+
 
                         .requestMatchers("/error/**").permitAll()
                         .anyRequest().authenticated())
