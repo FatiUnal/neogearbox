@@ -57,21 +57,21 @@ public class PostController {
     @GetMapping("/small")
     public ResponseEntity<List<PostSmallDto>> getSmallPosts(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "50") int size) {
+            @RequestParam(defaultValue = "999") int size) {
         return new ResponseEntity<>(postService.getPaginatedPosts(page, size),HttpStatus.OK);
     }
 
     @GetMapping("/category")
     public ResponseEntity<List<PostSmallDto>> getCategoryPosts(@RequestParam int category,
                                                                @RequestParam(defaultValue = "0") int page,
-                                                               @RequestParam(defaultValue = "10") int size) {
+                                                               @RequestParam(defaultValue = "999") int size) {
         return new ResponseEntity<>(postService.getCategoryPosts(category,page,size),HttpStatus.OK);
     }
 
     @GetMapping("/category/name")
     public ResponseEntity<List<PostSmallDto>> getCategoryByNamePosts(@RequestParam String linkName,
                                                                @RequestParam(defaultValue = "0") int page,
-                                                               @RequestParam(defaultValue = "10") int size) {
+                                                               @RequestParam(defaultValue = "999") int size) {
         return new ResponseEntity<>(postService.getCategoryByNamePosts(linkName,page,size),HttpStatus.OK);
     }
 
